@@ -164,13 +164,14 @@ def grafieken():
     ###################################################################################################################
     
     st.markdown("""
-    ## Levensverwachting over de tijd per regio
-    Vervolgens is gekeken naar de levensverwachting door je jaren heen per regio.""")
+    ## Levensverwachting over de tijd per regio""")
     
     col1, col2 = st.columns(2)
 
     with col1:
         st.markdown("""
+        Vervolgens is gekeken naar de levensverwachting door je jaren heen per regio.
+        
         In deze grafiek is te zien dat over de jaren heen de levensverwachting over het algemeen is toegenomen.
         Wat opvalt is dat de levensverwachting het meest toegenomen in Afrika.""")
     
