@@ -131,7 +131,7 @@ def grafieken():
     jaren = ('2001', '2002', '2003', '2004', '2005', '2006', '2007', '2008', '2009', '2010',
             '2011', '2012', '2013', '2014', '2015')
     
-    col1, col2 = st.columns([2, 3])
+    col1, col2 = st.columns([1, 4])
     
     with col1:
         # Add the choicemenu to the first column
@@ -166,7 +166,7 @@ def grafieken():
     st.markdown("""
     ## Levensverwachting over de tijd per regio""")
     
-    col1, col2 = st.columns([1, 4])
+    col1, col2 = st.columns([2, 2])
 
     with col1:
         st.markdown("""
