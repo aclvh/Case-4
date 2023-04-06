@@ -166,7 +166,7 @@ def grafieken():
     st.markdown("""
     ## Levensverwachting over de tijd per regio""")
     
-    col1, col2 = st.columns([2, 2])
+    col1, col2 = st.columns([1, 2])
 
     with col1:
         st.markdown("""
