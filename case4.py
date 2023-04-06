@@ -5,6 +5,7 @@
 
 
 import streamlit as st
+get_ipython().system('pip install streamlit-folium')
 st.set_page_config(layout = 'wide')
 
 
