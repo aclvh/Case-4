@@ -7,6 +7,7 @@
 import streamlit as st
 st.set_page_config(layout = 'wide')
 
+
 # In[ ]:
 
 
@@ -26,8 +27,11 @@ def intro():
     
     Voor dit project is gebruik gemaakt van meerdere datasets:
     
-    Een dataset van kaggle gebruikt. Deze dataset is ingeladen m.b.v. een API.
-    Deze dataset is te vinden via de volgende link: https://www.kaggle.com/datasets/lashagoch/life-expectancy-who-updated
+    Een dataset van kaggle gebruikt die gaat over de levensverwachting in landen over de hele wereld door de jaren heen 
+    (2000 t/m 2015).
+    Deze dataset is ingeladen m.b.v. een API en is te vinden via de volgende link:
+    
+    https://www.kaggle.com/datasets/lashagoch/life-expectancy-who-updated
     """)
     
     # API en data inladen
@@ -48,7 +52,7 @@ def intro():
 
     st.code(code_API, language = 'python')
     st.write("De dataset ziet er nu als volgt uit:", life_exp_head, "De dataset bestaat nu uit ",
-             life_exp_rijen, " rijen en ", life_exp_kolommen, " aantal_kolommen.")
+             life_exp_rijen, " rijen en ", life_exp_kolom, " aantal_kolommen.")
     
     st.markdown("""
     Ook is gewerkt met een geopandas dataset die gaat over landen over de hele wereld.
@@ -67,7 +71,7 @@ def intro():
 
     st.code(code_geo, language = 'python')
     st.write("De dataset ziet er nu als volgt uit:", world_head, "De dataset bestaat nu uit ",
-             world_rijen, " rijen en ", world_kolommen, " aantal_kolommen.")
+             world_rijen, " rijen en ", world_kolom, " aantal_kolommen.")
     
     st.markdown("""
     Deze 2 datasets zijn samengevoegd, maar eerst zijn hiervoor de waarden in de kolommen 'name' uit het geopandas
@@ -85,7 +89,7 @@ def intro():
 
     st.code(code_df, language = 'python')
     st.write("De dataset ziet er nu als volgt uit:", df_head, "De dataset bestaat nu uit ",
-             df_rijen, " rijen en ", df_kolommen, " aantal_kolommen.")
+             df_rijen, " rijen en ", df_kolom, " aantal_kolommen.")
     
     st.markdown("""
     Om vervolgens meer informatie over het project te lezen
