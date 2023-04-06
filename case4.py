@@ -103,15 +103,48 @@ def intro():
 def grafieken():
     import streamlit as st
     
-    st.markdown(f"# {list(page_names_to_funcs.keys())[1]}")
+    st.markdown("""
+    # Inzichtin data m.b.v. grafieken.
+    Aan de hand van de data zijn verschillende ondervindingen gedaan. Deze zijn hieronder te lezen en te zien in
+    verschillende plotjes.""")
+    
     st.write("""
-        Op deze pagina zijn grafieken te vinden van situaties die team 10 graag wilde onderzoeken.
-        Heeft de hoeveelheid dagelijkse alcoholgebruik invloed op het uiteindelijke cijfer? Halen leerlingen minder hoge
-        cijfers ze een langere reistijd hebben naar school? Dit zijn enkele vragen die beantwoord worden op deze pagina.
-        Eerst zullen twee grafieken worden getoond met informatie over beide vakken.
-        Vervolgens kan voor verschillende grafieken informatie gekregen worden over een specifiek vak.
-        
-        **👈 Hiervoor kan een keuze worden gemaakt in de balk hiernaast**""")
+    ## Levensverwachting verschillende regio's
+    Als eerst is gekeken naar de levensverwachting die mensen hebben in verschillende landen over de jaren heen.""")
+    
+    
+    jaren = ('2001', '2002', '2003', '2004', '2005', '2006', '2007', '2008', '2009', '2010',
+            '2011', '2012', '2013', '2014', '2015')
+    
+    jaar = st.radio(
+    'Jaar', jaren)
+    
+    for i in jaren:
+        if i == jaar:
+            # Jaartal dat wordt gebruikt op de kaart
+            df_kaart = df[df['Year'] == 2001].dropna()
+    
+    
+    # Kaart maken
+    m = folium.Map(location = [0,0],
+                   zoom_start = 10,
+                   zoom_control=False,
+                   min_zoom = 2,
+                   max_zoom = 2,
+                   tiles = 'openstreetmap')
+
+    # Choropleth gekozen jaar plotten
+    m.choropleth(geo_data = world,
+                 name = 'geometry',
+                 data = df_kaart,
+                 columns = ['Country', 'Life_expectancy'],
+                 key_on = 'feature.properties.name',
+                 fill_color = 'YlGn',
+                 fill_opacity = 0.75,
+                 line_opacity = 0.5,
+                 legend_name = 'Life expectancy')
+    
+    st_data = st_folium(m, width = 725)
 
 
 # In[ ]:
