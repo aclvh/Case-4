@@ -120,7 +120,7 @@ def grafieken():
     verschillende plotjes.""")
     
     st.write("""
-    ## Levensverwachting verschillende regio's
+    ## Levensverwachting over de hele wereld
     Als eerst is gekeken naar de levensverwachting die mensen hebben in verschillende landen over de jaren heen.""")
     
     
@@ -155,7 +155,6 @@ def grafieken():
                      line_opacity = 0.5,
                      legend_name = 'Life expectancy')
 
-        st_data = col2.subheader('World Life Expectancy')
         st_data = st_folium(m, width = 725, height = 500)
     
 
