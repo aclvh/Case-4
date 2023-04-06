@@ -111,6 +111,7 @@ def grafieken():
 #     import seaborn as sns
     
     df = pd.read_csv('df.csv')
+    world = geopandas.read_file(geopandas.datasets.get_path('naturalearth_lowres'))
     
     st.markdown("""
     # Inzichtin data m.b.v. grafieken.
