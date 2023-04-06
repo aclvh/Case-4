@@ -5,7 +5,7 @@
 
 
 import streamlit as st
-
+st.set_page_config(layout = 'wide')
 
 # In[ ]:
 
@@ -15,7 +15,6 @@ def intro():
     import pandas as pd
     import geopandas
     
-    st.set_page_config(layout = 'wide')
     st.write("# Case 4 – Maken van een dashboard")
 #     st.sidebar.success("Selecteer een pagina.")
 
