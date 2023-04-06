@@ -164,42 +164,37 @@ def grafieken():
     ###################################################################################################################
     
     st.markdown("""
-    ## Levensverwachting over de tijd per regio""")
+    ## Levensverwachting over de tijd per regio
+    Hieronder is gekeken naar de levensverwachting door je jaren heen per regio.""")
     
-    col1, col2 = st.columns([1, 2])
+    # Dataframe voor life expectancy per regio maken
+    df_time = df[['Country', 'Region', 'Year', 'Life_expectancy']]
 
-    with col1:
-        st.markdown("""
-        Vervolgens is gekeken naar de levensverwachting door je jaren heen per regio.
-        
-        In deze grafiek is te zien dat over de jaren heen de levensverwachting over het algemeen is toegenomen.
-        Wat opvalt is dat de levensverwachting het meest toegenomen in Afrika.""")
+    # Dataframe sorteren per regio en jaar
+    df_time.sort_values(by = ['Region', 'Year'], inplace = True)
+
+    # Nieuwe kolom met gemiddelde levensverwachting per regio per jaar aanmaken
+    df_time = df_time.groupby(['Region', 'Year'])['Life_expectancy'].mean().reset_index(name = 'Mean_life_expectancy')
+
+    # Kolom datum toevoegen voor mooie plot
+    df_time['Date'] = pd.to_datetime(df_time['Year'].astype(str) + '-01-01')
+
+    fig = px.line(df_time,
+                  y = 'Mean_life_expectancy',
+                  x = 'Date',
+                  color = 'Region')
+
+    fig.update_layout(title = 'Gemiddelde levensverwachting per regio',
+                      xaxis_title = 'Jaar',
+                      yaxis_title = 'Levensverwachting',
+                      legend_title = 'Regio',
+                      xaxis = dict(rangeslider = dict(visible = True)))
+
+    st.plotly_chart(fig)
     
-    with col2:
-        # Dataframe voor life expectancy per regio maken
-        df_time = df[['Country', 'Region', 'Year', 'Life_expectancy']]
-
-        # Dataframe sorteren per regio en jaar
-        df_time.sort_values(by = ['Region', 'Year'], inplace = True)
-
-        # Nieuwe kolom met gemiddelde levensverwachting per regio per jaar aanmaken
-        df_time = df_time.groupby(['Region', 'Year'])['Life_expectancy'].mean().reset_index(name = 'Mean_life_expectancy')
-
-        # Kolom datum toevoegen voor mooie plot
-        df_time['Date'] = pd.to_datetime(df_time['Year'].astype(str) + '-01-01')
-
-        fig = px.line(df_time,
-                      y = 'Mean_life_expectancy',
-                      x = 'Date',
-                      color = 'Region')
-
-        fig.update_layout(title = 'Gemiddelde levensverwachting per regio',
-                          xaxis_title = 'Jaar',
-                          yaxis_title = 'Levensverwachting',
-                          legend_title = 'Regio',
-                          xaxis = dict(rangeslider = dict(visible = True)))
-
-        st.plotly_chart(fig)
+    st.markdown("""
+    In deze grafiek is te zien dat over de jaren heen de levensverwachting over het algemeen is toegenomen.
+    Wat opvalt is dat de levensverwachting het meest toegenomen in Afrika.""")
 
 
 # In[ ]:
