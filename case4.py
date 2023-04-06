@@ -82,7 +82,7 @@ def intro():
     code_df = """
     df = life_exp.merge(world, left_on = 'Country', right_on = 'name', how = 'left')"""
     
-    df = life_exp.merge(world, left_on = 'Country', right_on = 'name', how = 'left')
+    df = pd.read_csv('df.csv')
     df_head = df.head()
     df_rijen = df.shape[0]
     df_kolom = df.shape[1]
