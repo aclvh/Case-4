@@ -107,8 +107,8 @@ def grafieken():
     import folium
     import plotly.express as px
     
-    import matplotlib.pyplot as plt
-    import seaborn as sns
+#     import matplotlib.pyplot as plt
+#     import seaborn as sns
     
     df = pd.read_csv('df.csv')
     
