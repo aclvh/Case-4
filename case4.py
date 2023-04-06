@@ -156,7 +156,7 @@ def grafieken():
                  legend_name = 'Life expectancy')
 
     st_data = col2.subheader('World Life Expectancy')
-    st_data = st_folium(m, width = 725, height = 500)
+    st_data = col2.st_folium(m, width = 725, height = 500)
     
 
     #     jaar = st.radio(
