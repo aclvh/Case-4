@@ -127,24 +127,24 @@ def grafieken():
     jaren = ('2001', '2002', '2003', '2004', '2005', '2006', '2007', '2008', '2009', '2010',
             '2011', '2012', '2013', '2014', '2015')
     
-    jaar = st.radio(
-    'Jaar', jaren)
     
-    for i in jaren:
-        if i == jaar:
-            # Jaartal dat wordt gebruikt op de kaart
-            df_kaart = df[df['Year'] == 2001].dropna()
-    
-    
-    # Kaart maken
+    # Create two columns, one for the choicemenu and one for the map
+    col1, col2 = st.beta_columns([1, 2])
+
+    # Add the choicemenu to the first column
+    jaar = col1.radio('Jaar', jaren)
+
+    # Filter the data based on the selected year
+    df_kaart = df[df['Year'] == int(jaar)].dropna()
+
+    # Create the map and add it to the second column
     m = folium.Map(location = [0,0],
                    zoom_start = 10,
-                   zoom_control=False,
+                   zoom_control = False,
                    min_zoom = 2,
                    max_zoom = 2,
                    tiles = 'openstreetmap')
 
-    # Choropleth gekozen jaar plotten
     m.choropleth(geo_data = world,
                  name = 'geometry',
                  data = df_kaart,
@@ -154,8 +154,40 @@ def grafieken():
                  fill_opacity = 0.75,
                  line_opacity = 0.5,
                  legend_name = 'Life expectancy')
+
+    st_data = col2.subheader('World Life Expectancy')
+    st_data = st_folium(m, width = 725, height = 500)
     
-    st_data = st_folium(m, width = 725)
+
+    #     jaar = st.radio(
+    #     'Jaar', jaren)
+
+    #     for i in jaren:
+    #         if i == jaar:
+    #             # Jaartal dat wordt gebruikt op de kaart
+    #             df_kaart = df[df['Year'] == 2001].dropna()
+
+
+    #     # Kaart maken
+    #     m = folium.Map(location = [0,0],
+    #                    zoom_start = 10,
+    #                    zoom_control=False,
+    #                    min_zoom = 2,
+    #                    max_zoom = 2,
+    #                    tiles = 'openstreetmap')
+
+    #     # Choropleth gekozen jaar plotten
+    #     m.choropleth(geo_data = world,
+    #                  name = 'geometry',
+    #                  data = df_kaart,
+    #                  columns = ['Country', 'Life_expectancy'],
+    #                  key_on = 'feature.properties.name',
+    #                  fill_color = 'YlGn',
+    #                  fill_opacity = 0.75,
+    #                  line_opacity = 0.5,
+    #                  legend_name = 'Life expectancy')
+
+    #     st_data = st_folium(m, width = 725)
 
 
 # In[ ]:
