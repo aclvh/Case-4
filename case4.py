@@ -422,6 +422,36 @@ def grafieken():
                                           xaxis = dict(rangeslider = dict(visible = True)))
 
         fig_inenting_afrika
+        
+    ###################################################################################################################
+    col1, col2 = st.columns(2)
+
+    with col1:
+        st.markdown("""
+        Om te onderzoeken of de levensverwachting inderdaad toeneemt, wanneer een hoger percentage van de bevolking is 
+        ingeënt tegen verschillende ziekten is een scatterplot gemaakt.
+        
+        Het percentage wat is gebruikt is het gemiddelde van de percentages i....
+        
+        In de scatterplot is inderdaad te zien, dat wanneer het percentage wat ingeënt is stijgt de levensverwachting
+        ook toeneemt.""")
+        
+    with col2:
+        df_inenting = df[['Hepatitis_B', 'Measles', 'Polio', 'Diphtheria', 'Life_expectancy']]
+        df_inenting['gem_percentage_ingeënt'] = dftest[['Hepatitis_B', 'Measles', 'Polio', 'Diphtheria']].mean(axis=1)
+
+        # keuze ziekte
+        fig = px.scatter(dftest,
+                         x = 'gem_percentage_ingeënt',
+                         y = 'Life_expectancy',
+                         trendline='ols',
+                         trendline_color_override = 'red')
+
+        fig.update_layout(title = "Regressie tussen het gemiddelde percentage ingeënt en de levensverwachting",
+                                 xaxis_title = "Gemiddeld percentage ingeënt voor verschillende ziekten",
+                                 yaxis_title = "Levensverwachting in jaren")
+
+        fig
 
 
 # In[ ]:
