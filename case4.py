@@ -121,7 +121,7 @@ def grafieken():
     # Eerste stuk tekst pagina
     
     st.markdown("""
-    # Inzichtin data m.b.v. grafieken.
+    # Inzicht in data m.b.v. grafieken.
     Aan de hand van de data zijn verschillende ondervindingen gedaan. Deze zijn hieronder te lezen en te zien in
     verschillende plotjes.""")
     
@@ -277,9 +277,15 @@ def grafieken():
     # (Kijken of de stijging van de levensverwachting misschien komt door de inentingen)
     # Kijken of de minder hoge levensverwachting in Africa bijvoorbeeld komt doordat er minder wordt ingeënt
     
+    
     st.markdown("""
+    ## Inentingen
+    ### Percentage inentingen per regio en ziekte
     Om te onderzoeken of de minder hoge levensverwachting in Africa komt omdat er evenuteel minder ingeënt wordt,
-    is per regio het gemiddelde percentage inentingen (vanaf 1 jaar oud) per ziekte berekend.""")
+    is per regio het gemiddelde percentage inentingen per ziekte berekend.
+    
+    Ook is onderzocht of in andere regio's het gemiddelde percentage inentingen hoger is, wanneer in ndie regio's ook 
+    een hogere levensverwachting is.""")
     
     df_im = df[['Region', 'Polio', 'Diphtheria', 'Measles', 'Hepatitis_B']]
 
@@ -311,7 +317,7 @@ def grafieken():
                          x = 'Region',
                          category_orders = {'Region': regio_volgorde})
 
-        fig_polio.update_layout(title = 'Gemiddeld percentage ingeënt tegen Polio per regio',
+        fig_polio.update_layout(title = 'Gemiddeld percentage ingeënt tegen polio per regio',
                                 xaxis_title = 'Regio',
                                 yaxis_title = 'Percentage',
                                 yaxis_range = [0,100])
@@ -324,7 +330,7 @@ def grafieken():
                          x = 'Region', 
                          category_orders = {'Region': regio_volgorde})
 
-        fig_dipth.update_layout(title = 'Gemiddeld percentage ingeënt tegen dipth per regio',
+        fig_dipth.update_layout(title = 'Gemiddeld percentage ingeënt tegen difterie per regio',
                                 xaxis_title = 'Regio',
                                 yaxis_title = 'Percentage', 
                                 yaxis_range = [0,100])
@@ -338,7 +344,7 @@ def grafieken():
                          x = 'Region',
                          category_orders = {'Region': regio_volgorde})
 
-        fig_measl.update_layout(title = 'Gemiddeld percentage ingeënt tegen measl per regio',
+        fig_measl.update_layout(title = 'Gemiddeld percentage ingeënt tegen de mazelen per regio',
                                 xaxis_title = 'Regio',
                                 yaxis_title = 'Percentage', 
                                 yaxis_range = [0,100])
@@ -351,7 +357,7 @@ def grafieken():
                          x = 'Region',
                          category_orders = {'Region': regio_volgorde})
 
-        fig_hepat.update_layout(title = 'Gemiddeld percentage ingeënt tegen hepat per regio',
+        fig_hepat.update_layout(title = 'Gemiddeld percentage ingeënt tegen hepatitis B per regio',
                                 xaxis_title = 'Regio',
                                 yaxis_title = 'Percentage',
                                 yaxis_range = [0,100])
@@ -362,26 +368,14 @@ def grafieken():
     ###################################################################################################################
     # Plot inentingen in Afrika over de jaren heen
     
+    st.markdown("""
+        In afrika is inderdaad het minste percentage ingeënt per ziekte gemiddeld gezien over de jaren heen.
+        In het volgende deel wordt gecontroleerd of dit percentage over de jaren heen is gestegen in plaats van alleen naar
+        het gemiddelde inentingspercentage te kijken.""")
+    
     col1, col2 = st.columns(2)
 
     with col1:
-        st.markdown("")
-        st.markdown("""
-            In afrika is inderdaad het minste percentage ingeënt per ziekte gemiddeld gezien over de jaren heen.
-            Nu gaan we controleren of dit percentage inderdaad over de jaren heen ook is gestegen in plaats van alleen naar
-            het gemiddelde kijken over de jaren heen.
-
-            In de plot hier rechts weergegeven is inderdaad te zien dat er een sterke stijging is geweest in het percentage
-            wat is ingeënt tegen hepatitis B, Polio en Diptheria. Bij de inentignen tegen de mazelen is deze stijging echter
-            niet te zien.
-
-            Het is waarschijnlijk om aan te nemen dat de levensverwachting in Afrika is toegenomen door de stijging in het 
-            percentage mensen dat wordt ingeënt tegen deze ziektes.
-
-            Het is dus ook waarschijnlijk om aan te nemen dat de levensverwachting in alle landen toeneemt, naarmate een 
-            groter percentage van de bevolking is ingeënt tegen deze ziektes.""")
-        
-    with col2:
         # Dataframe met alleen het gebied Afrika
         df_afrika = df[df['Region'] == 'Africa']
 
@@ -424,22 +418,21 @@ def grafieken():
                                           xaxis = dict(rangeslider = dict(visible = True)))
 
         fig_inenting_afrika
+
+    with col2:
+        st.markdown("")
+        st.markdown("""
+        In de plot die links wordt weergegeven is inderdaad te zien dat er een sterke stijging is geweest in het
+        percentage wat is ingeënt tegen hepatitis B, polio en difterie. Bij de inentignen tegen de mazelen is deze
+        stijging echter niet te zien.
+
+        Het is aannemelijk om aan te nemen dat de levensverwachting in Afrika is toegenomen door de stijging in het 
+        percentage mensen dat wordt ingeënt tegen deze ziektes.""")
         
     ###################################################################################################################
     col1, col2 = st.columns(2)
 
     with col1:
-        st.markdown("")
-        st.markdown("""
-        Om te onderzoeken of de levensverwachting inderdaad toeneemt, wanneer een hoger percentage van de bevolking is 
-        ingeënt tegen verschillende ziekten is een scatterplot gemaakt.
-        
-        Het percentage wat is gebruikt is het gemiddelde van de percentages i....
-        
-        In de scatterplot is inderdaad te zien, dat wanneer het percentage wat ingeënt is stijgt de levensverwachting
-        ook toeneemt.""")
-        
-    with col2:
         df_inenting = df[['Hepatitis_B', 'Measles', 'Polio', 'Diphtheria', 'Life_expectancy']]
         df_inenting['gem_percentage_ingeënt'] = df_inenting[['Hepatitis_B', 'Measles', 'Polio', 'Diphtheria']].mean(axis=1)
 
@@ -455,6 +448,22 @@ def grafieken():
                                  yaxis_title = "Levensverwachting in jaren")
 
         fig
+
+    with col2:
+        st.markdown("")
+        st.markdown("""
+        
+        Door de aanname die volgt uit de vorige plot zou men kunnen aannemen dat de levensverwacthing toeneemt 
+        naarmate een groter percentage van de bevolking is ingeënt tegen deze ziektes.
+        
+        Om te onderzoeken of de levensverwachting inderdaad toeneemt, wanneer een hoger percentage van de bevolking is 
+        ingeënt tegen verschillende ziekten is een scatterplot gemaakt.
+        
+        Het percentage wat is gebruikt is het gemiddelde inentingspercentage van alle vier de inentingen
+        (per land en jaar).
+        
+        In de scatterplot is inderdaad te zien, dat wanneer het percentage wat ingeënt is stijgt, de levensverwachting
+        ook toeneemt.""")
         
     ###################################################################################################################
     col1, col2 = st.columns(2)
