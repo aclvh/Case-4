@@ -105,6 +105,7 @@ def grafieken():
     import folium
     from streamlit_folium import st_folium
     import plotly.express as px
+    import statsmodels.api as sm
     
 #     import matplotlib.pyplot as plt
 #     import seaborn as sns
@@ -444,7 +445,7 @@ def grafieken():
         fig = px.scatter(df_inenting,
                          x = 'gem_percentage_ingeënt',
                          y = 'Life_expectancy',
-                         trendline='ols',
+                         trendline = 'ols',
                          trendline_color_override = 'red')
 
         fig.update_layout(title = "Regressie tussen het gemiddelde percentage ingeënt en de levensverwachting",
