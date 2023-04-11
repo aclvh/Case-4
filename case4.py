@@ -418,7 +418,7 @@ def grafieken():
                                           yaxis_title = 'Percentage',
                                           legend_title = 'Inenting',
                                           xaxis = dict(rangeslider = dict(visible = True)),
-                                          width = 500)
+                                          width = 650)
 
         fig_inenting_afrika
 
