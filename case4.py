@@ -433,7 +433,8 @@ def grafieken():
         percentage mensen dat wordt ingeënt tegen deze ziektes.""")
         
     ###################################################################################################################
-    # Plot 
+    # Plot regressie tussen gemiddeld percentage ingeënd en levensverwachting
+    st.markdown("""### Relatie tussen gemiddeld percentage ingeënt en levensverwachting""")
     
     col1, col2 = st.columns(2)
 
