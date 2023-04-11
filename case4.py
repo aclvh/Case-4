@@ -110,12 +110,12 @@ def grafieken():
 #     import seaborn as sns
 
     ###################################################################################################################
-
     # Datasets inladen
     df = pd.read_csv('df.csv')
     world = geopandas.read_file(geopandas.datasets.get_path('naturalearth_lowres'))
     
     ###################################################################################################################
+    # Eerste stuk tekst pagina
     
     st.markdown("""
     # Inzichtin data m.b.v. grafieken.
@@ -123,6 +123,7 @@ def grafieken():
     verschillende plotjes.""")
     
     ###################################################################################################################
+    # Kaart met levensverwachting over de hele wereld
     
     st.markdown("""
     ## Levensverwachting over de hele wereld
@@ -131,10 +132,9 @@ def grafieken():
     jaren = ('2001', '2002', '2003', '2004', '2005', '2006', '2007', '2008', '2009', '2010',
             '2011', '2012', '2013', '2014', '2015')
     
-    col1, col2 = st.columns([1, 4])
+    col1, col2 = st.columns([1, 5])
     
     with col1:
-        # Add the choicemenu to the first column
         jaar = col1.radio('Jaar', jaren)
     
     with col2:
@@ -162,6 +162,7 @@ def grafieken():
         st_data = st_folium(m, width = 725, height = 500)
         
     ###################################################################################################################
+    # Lijndiagram levensverwachting over de tijd per regio
     
     st.markdown("""
     ## Levensverwachting over de tijd per regio
@@ -197,6 +198,7 @@ def grafieken():
     Wat opvalt is dat de levensverwachting het meest is toegenomen in Afrika.""")
     
     ###################################################################################################################
+    # Boxplots voor verdeling levensverwachting in het algemeen of voor specifieke jaren
     
     st.markdown("""
     ## Levensverwachting per regio
@@ -206,7 +208,8 @@ def grafieken():
 
     with col1:
 
-        # Boxplot levensverwachting per regio (dropdown)
+        # Eerste boxplot voor vergelijken
+        # Keuzemenu
         jaren = ('Algemeen', 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010,
                     2011, 2012, 2013, 2014, 2015)
         InvoerJaar_1 = st.selectbox('Selecteer het vak', jaren, key = 'Algemeen')
@@ -216,6 +219,7 @@ def grafieken():
         else:
             df_jaar = df.loc[df['Year'] == InvoerJaar_1].copy()
         
+        # Stuk code hieronder is zodat de x-as volgorde voor iedere keuze gelijk blijft
         regio_volgorde = ['Asia', 'Africa', 'Middle East', 'European Union', 'Rest of Europe', 'North America',
                   'South America', 'Central America and Caribbean', 'Oceania']
 
@@ -237,7 +241,8 @@ def grafieken():
 
     with col2:
     
-        # Boxplot levensverwachting per regio (dropdown)
+        # Tweede boxplot (voor vergelijken)
+        # Keuzemenu
         InvoerJaar_2 = st.selectbox('Selecteer het vak', jaren, key = 2001)
 
         if InvoerJaar_2 == 'Algemeen':
@@ -245,6 +250,7 @@ def grafieken():
         else:
             df_jaar = df.loc[df['Year'] == InvoerJaar_2].copy()
 
+        # Stuk code hieronder is zodat de x-as volgorde voor iedere keuze gelijk blijft
         regio_volgorde = ['Asia', 'Africa', 'Middle East', 'European Union', 'Rest of Europe', 'North America',
                           'South America', 'Central America and Caribbean', 'Oceania']
 
@@ -263,6 +269,91 @@ def grafieken():
                                width = 650)
         
         fig_jaar
+        
+    ###################################################################################################################
+    # (Kijken of de stijging van de levensverwachting misschien komt door de inentingen)
+    # Kijken of de minder hoge levensverwachting in Africa bijvoorbeeld komt doordat er minder wordt ingeënt
+    
+    st.markdown("""
+    Om te onderzoeken of de minder hoge levensverwachting in Africa komt omdat er evenuteel minder ingeënt wordt,
+    is per regio het gemiddelde percentage inentingen (vanaf 1 jaar oud) per ziekte berekend.""")
+    
+    df_im = df[['Region', 'Polio', 'Diphtheria', 'Measles', 'Hepatitis_B']]
+
+    df_polio = df_im.assign(gem_polio = df_im.groupby('Region')['Polio'].transform('mean'))
+    df_polio = df_polio[['Region', 'gem_polio']]
+    df_dipth = df_im.assign(gem_dipth = df_im.groupby('Region')['Diphtheria'].transform('mean'))
+    df_dipth = df_dipth[['Region', 'gem_dipth']]
+    df_measl = df_im.assign(gem_measl = df_im.groupby('Region')['Measles'].transform('mean'))
+    df_measl = df_measl[['Region', 'gem_measl']]
+    df_hepat = df_im.assign(gem_hepat = df_im.groupby('Region')['Hepatitis_B'].transform('mean'))
+    df_hepat = df_hepat[['Region', 'gem_hepat']]
+
+    df_im_1 = df_polio.merge(df_dipth, on = 'Region')
+    df_im_1 = df_im_1.drop_duplicates()
+    df_im_1.head()
+
+    df_im_2 = df_measl.merge(df_hepat, on = 'Region')
+    df_im_2 = df_im_2.drop_duplicates()
+    df_im_2.head()
+
+    df_im_tot = df_im_1.merge(df_im_2, on = 'Region')
+    
+    col1, col2 = st.columns(2)
+
+    with col1:
+        # plot polio
+        fig_polio = px.histogram(df_im_tot,
+                         y = 'gem_polio',
+                         x = 'Region',
+                         category_orders = {'Region': regio_volgorde})
+
+        fig_polio.update_layout(title = 'Gemiddeld percentage ingeënt tegen Polio per regio',
+                                xaxis_title = 'Regio',
+                                yaxis_title = 'Percentage',
+                                yaxis_range = [0,100])
+
+        fig_polio.show()
+        
+        # Plot dipth
+        fig_dipth = px.histogram(df_im_tot,
+                         y = 'gem_dipth',
+                         x = 'Region', 
+                         category_orders = {'Region': regio_volgorde})
+
+        fig_dipth.update_layout(title = 'Gemiddeld percentage ingeënt tegen dipth per regio',
+                                xaxis_title = 'Regio',
+                                yaxis_title = 'Percentage', 
+                                yaxis_range = [0,100])
+
+        fig_dipth.show()
+        
+    with col2:
+        # Plot measl
+        fig_measl = px.histogram(df_im_tot,
+                         y = 'gem_measl',
+                         x = 'Region',
+                         category_orders = {'Region': regio_volgorde})
+
+        fig_measl.update_layout(title = 'Gemiddeld percentage ingeënt tegen measl per regio',
+                                xaxis_title = 'Regio',
+                                yaxis_title = 'Percentage', 
+                                yaxis_range = [0,100])
+
+        fig_measl.show()
+        
+        # Plot hepat
+        fig_hepat = px.histogram(df_im_tot,
+                         y = 'gem_hepat',
+                         x = 'Region',
+                         category_orders = {'Region': regio_volgorde})
+
+        fig_hepat.update_layout(title = 'Gemiddeld percentage ingeënt tegen hepat per regio',
+                                xaxis_title = 'Regio',
+                                yaxis_title = 'Percentage',
+                                yaxis_range = [0,100])
+
+        fig_hepat.show()
 
 
 # In[ ]:
