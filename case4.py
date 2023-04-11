@@ -54,6 +54,7 @@ def intro():
     st.write("De dataset ziet er nu als volgt uit:", life_exp_head, "De dataset bestaat nu uit ",
              life_exp_rijen, " rijen en ", life_exp_kolom, " aantal_kolommen.")
     
+    st.markdown("")
     st.markdown("""
     **Wereld dataset**
     
@@ -74,6 +75,7 @@ def intro():
     st.write("De dataset ziet er nu als volgt uit:", world_head, "De dataset bestaat nu uit ",
              world_rijen, " rijen en ", world_kolom, " aantal_kolommen.")
     
+    st.markdown("")
     st.markdown("""
     **Datasets samenvoegen**
     
