@@ -421,7 +421,7 @@ def grafieken():
                                           legend_title = 'Inenting',
                                           xaxis = dict(rangeslider = dict(visible = True)))
 
-        fig
+        fig_inenting_afrika
 
 
 # In[ ]:
