@@ -438,7 +438,7 @@ def grafieken():
         
     with col2:
         df_inenting = df[['Hepatitis_B', 'Measles', 'Polio', 'Diphtheria', 'Life_expectancy']]
-        df_inenting['gem_percentage_ingeënt'] = dftest[['Hepatitis_B', 'Measles', 'Polio', 'Diphtheria']].mean(axis=1)
+        df_inenting['gem_percentage_ingeënt'] = df_inenting[['Hepatitis_B', 'Measles', 'Polio', 'Diphtheria']].mean(axis=1)
 
         # keuze ziekte
         fig = px.scatter(df_inenting,
