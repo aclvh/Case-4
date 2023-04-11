@@ -20,19 +20,19 @@ def intro():
 #     st.sidebar.success("Selecteer een pagina.")
 
     st.markdown("""
-    Streamlit is een open-source app framework wat specifiek is gemaakt voor
-    Machine Learning en Data Science projecten.
     In dit project is een data-analyse gedaan over de verandering van de levensverwachting over de hele wereld
     en over verschillende invloeden hierop.
     
-    Voor dit project is gebruik gemaakt van meerdere datasets:
+    Voor dit project is gebruik gemaakt van meerdere datasets:""")
+    
+    st.markdown("""
+    **Levensverwachting dataset**
     
     Een dataset van kaggle gebruikt die gaat over de levensverwachting in landen over de hele wereld door de jaren heen 
     (2000 t/m 2015).
     Deze dataset is ingeladen m.b.v. een API en is te vinden via de volgende link:
     
-    https://www.kaggle.com/datasets/lashagoch/life-expectancy-who-updated
-    """)
+    https://www.kaggle.com/datasets/lashagoch/life-expectancy-who-updated""")
     
     # API en data inladen
     code_API = """
@@ -55,9 +55,10 @@ def intro():
              life_exp_rijen, " rijen en ", life_exp_kolom, " aantal_kolommen.")
     
     st.markdown("""
+    **Wereld dataset**
+    
     Ook is gewerkt met een geopandas dataset die gaat over landen over de hele wereld.
-    Deze is als volgt ingeladen:
-    """)
+    Deze is als volgt ingeladen:""")
     
     # Geodata inladen
     code_geo = """
@@ -74,6 +75,8 @@ def intro():
              world_rijen, " rijen en ", world_kolom, " aantal_kolommen.")
     
     st.markdown("""
+    ** Datasets samenvoegen**
+    
     Deze 2 datasets zijn samengevoegd, maar eerst zijn hiervoor de waarden in de kolommen 'name' uit het geopandas
     dataframe en de waarden in de kolom 'Country' gelijk gemaakt. Hoe de datasets zijn samengevoegd is hieronder te zien:
     """)
@@ -90,11 +93,6 @@ def intro():
     st.code(code_df, language = 'python')
     st.write("De dataset ziet er nu als volgt uit:", df_head, "De dataset bestaat nu uit ",
              df_rijen, " rijen en ", df_kolom, " aantal_kolommen.")
-    
-    st.markdown("""
-    Om vervolgens meer informatie over het project te lezen
-    
-    **👈 Selecteer dan een keuze uit de balk hiernaast**.""")
 
 
 # In[ ]:
@@ -111,6 +109,9 @@ def grafieken():
 #     import matplotlib.pyplot as plt
 #     import seaborn as sns
 
+    ###################################################################################################################
+
+    # Datasets inladen
     df = pd.read_csv('df.csv')
     world = geopandas.read_file(geopandas.datasets.get_path('naturalearth_lowres'))
     
@@ -126,7 +127,6 @@ def grafieken():
     st.markdown("""
     ## Levensverwachting over de hele wereld
     Als eerst is gekeken naar de levensverwachting die mensen hebben in verschillende landen over de jaren heen.""")
-    
     
     jaren = ('2001', '2002', '2003', '2004', '2005', '2006', '2007', '2008', '2009', '2010',
             '2011', '2012', '2013', '2014', '2015')
@@ -165,7 +165,7 @@ def grafieken():
     
     st.markdown("""
     ## Levensverwachting over de tijd per regio
-    Hieronder is gekeken naar de levensverwachting door je jaren heen per regio.""")
+    Hieronder is gekeken naar de levensverwachting door de jaren heen per regio.""")
     
     # Dataframe voor life expectancy per regio maken
     df_time = df[['Country', 'Region', 'Year', 'Life_expectancy']]
@@ -194,7 +194,50 @@ def grafieken():
     
     st.markdown("""
     In deze grafiek is te zien dat over de jaren heen de levensverwachting over het algemeen is toegenomen.
-    Wat opvalt is dat de levensverwachting het meest toegenomen in Afrika.""")
+    Wat opvalt is dat de levensverwachting het meest is toegenomen in Afrika.""")
+    
+    ###################################################################################################################
+    
+    st.markdown("""
+    ## Levensverwachting per regio
+    Hieronder is gekeken naar de verdeling van de levensverwachting per regio.""")
+    
+    col1, col2 = st.columns(2)
+    
+    with col1:
+
+        # Boxplot levensverwachting per regio (algemeen)
+        fig_alg = px.box(df,
+                         x = 'Region',
+                         y = 'Life_expectancy')
+
+        fig_alg.update_layout(title = 'Relatie tussen levensverwachting en de regio',
+                              xaxis_title = 'Regio',
+                              yaxis_title = 'Levensverwachting')
+
+        fig_alg
+
+    with col2:
+        
+        # Boxplot levensverwachting per regio (dropdown)
+        jaren = ('Algemeen', '2001', '2002', '2003', '2004', '2005', '2006', '2007', '2008', '2009', '2010',
+                    '2011', '2012', '2013', '2014', '2015')
+        InvoerJaar = st.sidebar.selectbox('Selecteer het vak', jaren)
+
+        if InvoerJaar == 'Algemeen':
+            df_jaar = df
+        else:
+            df_jaar = df[df['Year'] == InvoerJaar]
+
+        fig_jaar = px.box(df_jaar,
+                          x = 'Region',
+                          y = 'Life_expectancy')
+
+        fig_jaar.update_layout(title = 'Relatie tussen levensverwachting en de regio',
+                               xaxis_title = 'Regio',
+                               yaxis_title = 'Levensverwachting')
+
+        fig_jaar
 
 
 # In[ ]:
