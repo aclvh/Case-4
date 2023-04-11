@@ -371,7 +371,9 @@ def grafieken():
     st.markdown("""
         In afrika is inderdaad het minste percentage ingeënt per ziekte gemiddeld gezien over de jaren heen.
         In het volgende deel wordt gecontroleerd of dit percentage over de jaren heen is gestegen in plaats van alleen naar
-        het gemiddelde inentingspercentage te kijken.""")
+        het gemiddelde inentingspercentage te kijken.
+        
+        ### Inentingen Afrika""")
     
     col1, col2 = st.columns(2)
 
@@ -415,7 +417,8 @@ def grafieken():
                                           xaxis_title = 'Datum',
                                           yaxis_title = 'Percentage',
                                           legend_title = 'Inenting',
-                                          xaxis = dict(rangeslider = dict(visible = True)))
+                                          xaxis = dict(rangeslider = dict(visible = True)),
+                                          width = 500)
 
         fig_inenting_afrika
 
