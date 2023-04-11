@@ -469,7 +469,7 @@ def grafieken():
         fig_BMI = px.histogram(df_hist,
                                x = 'BMI')
 
-        if regio == 'Asia':
+        if InvoerRegio == 'Asia':
             fig_BMI.add_vline(x = 23,
                               line_dash = 'dash',
                               line_color = 'firebrick')
