@@ -418,7 +418,7 @@ def grafieken():
                                           yaxis_title = 'Percentage',
                                           legend_title = 'Inenting',
                                           xaxis = dict(rangeslider = dict(visible = True)),
-                                          width = 650)
+                                          width = 700)
 
         fig_inenting_afrika
 
@@ -447,8 +447,9 @@ def grafieken():
                          trendline_color_override = 'red')
 
         fig.update_layout(title = "Regressie tussen het gemiddelde percentage ingeënt en de levensverwachting",
-                                 xaxis_title = "Gemiddeld percentage ingeënt voor verschillende ziekten",
-                                 yaxis_title = "Levensverwachting in jaren")
+                          xaxis_title = "Gemiddeld percentage ingeënt voor verschillende ziekten",
+                          yaxis_title = "Levensverwachting in jaren",
+                          width = 700)
 
         fig
 
