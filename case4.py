@@ -510,6 +510,9 @@ def grafieken():
         fig_BMI
     
     with col2:
+        st.markdown("")
+        st.markdown("")
+        st.markdown("")
         st.markdown("""
         In de plot is te zien dat er inderdaad meer mensen in ... zijn met een gezond BMI...""")
         
