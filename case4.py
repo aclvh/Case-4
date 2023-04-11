@@ -354,6 +354,74 @@ def grafieken():
                                 yaxis_range = [0,100])
 
         fig_hepat
+        
+    
+    ###################################################################################################################
+    # Plot inentingen in Afrika over de jaren heen
+    
+    col1, col2 = st.columns(2)
+
+    with col1:
+        
+        st.markdown("""
+            In afrika is inderdaad het minste percentage ingeënt per ziekte gemiddeld gezien over de jaren heen.
+            Nu gaan we controleren of dit percentage inderdaad over de jaren heen ook is gestegen in plaats van alleen naar
+            het gemiddelde kijken over de jaren heen.
+
+            In de plot hier rechts weergegeven is inderdaad te zien dat er een sterke stijging is geweest in het percentage
+            wat is ingeënt tegen hepatitis B, Polio en Diptheria. Bij de inentignen tegen de mazelen is deze stijging echter
+            niet te zien.
+
+            Het is waarschijnlijk om aan te nemen dat de levensverwachting in Afrika is toegenomen door de stijging in het 
+            percentage mensen dat wordt ingeënt tegen deze ziektes.
+
+            Het is dus ook waarschijnlijk om aan te nemen dat de levensverwachting in alle landen toeneemt, naarmate een 
+            groter percentage van de bevolking is ingeënt tegen deze ziektes.""")
+        
+    with col2:
+
+        # Dataframe met alleen het gebied Afrika
+        df_afrika = df[df['Region'] == 'Africa']
+
+        # Dataframe voor life expectancy per regio maken
+        df_afrika = df_afrika[['Country', 'Region', 'Year', 'Hepatitis_B', 'Measles', 'Polio', 'Diphtheria']]
+
+        # Dataframe sorteren per regio en jaar
+        df_afrika.sort_values(by = ['Region', 'Year'], inplace = True)
+
+        # Nieuwe kolom met gemiddelde percentage ingeënt per ziekte maken
+        df_afrika_hepa = df_afrika.groupby(['Year'])['Hepatitis_B'].mean().reset_index(name = 'Mean')
+        df_afrika_hepa['Inenting'] = 'Hepatitits_B'
+
+        df_afrika_meas = df_afrika.groupby(['Year'])['Measles'].mean().reset_index(name = 'Mean')
+        df_afrika_meas['Inenting'] = 'Measles'
+
+        df_afrika_polio = df_afrika.groupby(['Year'])['Polio'].mean().reset_index(name = 'Mean')
+        df_afrika_polio['Inenting'] = 'Polio'
+
+        df_afrika_dipth = df_afrika.groupby(['Year'])['Diphtheria'].mean().reset_index(name = 'Mean')
+        df_afrika_dipth['Inenting'] = 'Diphtheria'
+
+        # Nieuwe dataframes per ziekte samenvoegen
+        df_inenting_1 = pd.merge(df_afrika_hepa, df_afrika_meas, how = 'outer')
+        df_inenting_2 = pd.merge(df_afrika_polio, df_afrika_dipth, how = 'outer')
+        df_inenting = pd.merge(df_inenting_1, df_inenting_2, how = 'outer')
+
+        # Kolom datum toevoegen voor mooie plot
+        df_inenting['Date'] = pd.to_datetime(df_time['Year'].astype(str) + '-01-01')
+        
+        fig_inenting_afrika = px.line(df_inenting,
+                                      y = 'Mean',
+                                      x = 'Date',
+                                      color = 'Inenting')
+
+        fig_inenting_afrika.update_layout(title = 'Gemiddelde percentage ingeënt per ziekte',
+                                          xaxis_title = 'Datum',
+                                          yaxis_title = 'Percentage',
+                                          legend_title = 'Inenting',
+                                          xaxis = dict(rangeslider = dict(visible = True)))
+
+        fig
 
 
 # In[ ]:
