@@ -213,7 +213,7 @@ def grafieken():
         # Keuzemenu
         jaren = ('Algemeen', 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010,
                     2011, 2012, 2013, 2014, 2015)
-        InvoerJaar_1 = st.selectbox('Selecteer het vak', jaren, key = 'Algemeen')
+        InvoerJaar_1 = st.selectbox('Selecteer het jaar', jaren, key = 'Algemeen')
 
         if InvoerJaar_1 == 'Algemeen':
             df_jaar = df
@@ -244,7 +244,7 @@ def grafieken():
     
         # Tweede boxplot (voor vergelijken)
         # Keuzemenu
-        InvoerJaar_2 = st.selectbox('Selecteer het vak', jaren, key = 2001)
+        InvoerJaar_2 = st.selectbox('Selecteer het jaar', jaren, key = 2001)
 
         if InvoerJaar_2 == 'Algemeen':
             df_jaar = df
@@ -363,7 +363,7 @@ def grafieken():
     col1, col2 = st.columns(2)
 
     with col1:
-        
+        st.markdown("")
         st.markdown("""
             In afrika is inderdaad het minste percentage ingeënt per ziekte gemiddeld gezien over de jaren heen.
             Nu gaan we controleren of dit percentage inderdaad over de jaren heen ook is gestegen in plaats van alleen naar
@@ -380,7 +380,6 @@ def grafieken():
             groter percentage van de bevolking is ingeënt tegen deze ziektes.""")
         
     with col2:
-
         # Dataframe met alleen het gebied Afrika
         df_afrika = df[df['Region'] == 'Africa']
 
@@ -428,6 +427,7 @@ def grafieken():
     col1, col2 = st.columns(2)
 
     with col1:
+        st.markdown("")
         st.markdown("""
         Om te onderzoeken of de levensverwachting inderdaad toeneemt, wanneer een hoger percentage van de bevolking is 
         ingeënt tegen verschillende ziekten is een scatterplot gemaakt.
@@ -453,6 +453,41 @@ def grafieken():
                                  yaxis_title = "Levensverwachting in jaren")
 
         fig
+        
+    ###################################################################################################################
+    col1, col2 = st.columns(2)
+
+    with col1:
+    
+        regio_keuze = ('Asia', 'Africa', 'Middle East', 'European Union', 'Rest of Europe', 'North America',
+                      'South America', 'Central America and Caribbean', 'Oceania')
+
+        InvoerRegio = st.selectbox('Selecteer het jaar', regio_keuze, key = 'Asia')
+
+        df_hist = df[df['Region'] == InvoerRegio]
+
+        fig_BMI = px.histogram(df_hist,
+                               x = 'BMI')
+
+        if regio == 'Asia':
+            fig_BMI.add_vline(x = 23,
+                              line_dash = 'dash',
+                              line_color = 'firebrick')
+        else:
+            fig_BMI.add_vline(x = 25,
+                              line_dash = 'dash',
+                              line_color = 'firebrick')
+
+        fig_BMI.update_layout(title = 'Verdeling BMI',
+                              xaxis_title = 'BMI',
+                              yaxis_title = 'Aantal',
+                              xaxis_range = [19, 32.5])
+
+        fig_BMI
+    
+    with col2:
+        st.markdown("""
+        In de plot is te zien dat er inderdaad meer mensen in ... zijn met een gezond BMI...""")
 
 
 # In[ ]:
