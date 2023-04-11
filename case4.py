@@ -313,7 +313,7 @@ def grafieken():
                                 yaxis_title = 'Percentage',
                                 yaxis_range = [0,100])
 
-        fig_polio.show()
+        fig_polio
         
         # Plot dipth
         fig_dipth = px.histogram(df_im_tot,
@@ -326,7 +326,7 @@ def grafieken():
                                 yaxis_title = 'Percentage', 
                                 yaxis_range = [0,100])
 
-        fig_dipth.show()
+        fig_dipth
         
     with col2:
         # Plot measl
@@ -340,7 +340,7 @@ def grafieken():
                                 yaxis_title = 'Percentage', 
                                 yaxis_range = [0,100])
 
-        fig_measl.show()
+        fig_measl
         
         # Plot hepat
         fig_hepat = px.histogram(df_im_tot,
@@ -353,7 +353,7 @@ def grafieken():
                                 yaxis_title = 'Percentage',
                                 yaxis_range = [0,100])
 
-        fig_hepat.show()
+        fig_hepat
 
 
 # In[ ]:
