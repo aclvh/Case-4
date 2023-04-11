@@ -224,7 +224,7 @@ def grafieken():
                                xaxis_title = 'Regio',
                                yaxis_title = 'Levensverwachting (in jaren)',
                                yaxis_range = [25, 100],
-                               width = 500)
+                               width = 650)
 
         fig_jaar
 
@@ -246,7 +246,7 @@ def grafieken():
                                xaxis_title = 'Regio',
                                yaxis_title = 'Levensverwachting (in jaren)',
                                yaxis_range = [25, 100],
-                               width = 600)
+                               width = 650)
         
         fig_jaar
 
