@@ -209,16 +209,23 @@ def grafieken():
         # Boxplot levensverwachting per regio (dropdown)
         jaren = ('Algemeen', 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010,
                     2011, 2012, 2013, 2014, 2015)
-        InvoerJaar_1 = st.selectbox('Selecteer het vak', jaren, key='jaar1')
+        InvoerJaar_1 = st.selectbox('Selecteer het vak', jaren, key = 'Algemeen')
 
         if InvoerJaar_1 == 'Algemeen':
             df_jaar = df
         else:
-            df_jaar = df[df['Year'] == InvoerJaar_1]
+            df_jaar = df.loc[df['Year'] == InvoerJaar_1].copy()
+        
+        regio_volgorde = ['Asia', 'Africa', 'Middle East', 'European Union', 'Rest of Europe', 'North America',
+                  'South America', 'Central America and Caribbean', 'Oceania']
+
+        df_jaar['Region'] = pd.Categorical(df_jaar['Region'],
+                                           categories = regio_volgorde)
 
         fig_jaar = px.box(df_jaar,
                           x = 'Region',
-                          y = 'Life_expectancy')
+                          y = 'Life_expectancy',
+                          category_orders = {'Region': regio_volgorde})
 
         fig_jaar.update_layout(title = 'Relatie tussen levensverwachting en de regio',
                                xaxis_title = 'Regio',
@@ -231,16 +238,23 @@ def grafieken():
     with col2:
     
         # Boxplot levensverwachting per regio (dropdown)
-        InvoerJaar_2 = st.selectbox('Selecteer het vak', jaren, key='jaar2')
+        InvoerJaar_2 = st.selectbox('Selecteer het vak', jaren, key = 2001)
 
         if InvoerJaar_2 == 'Algemeen':
             df_jaar = df
         else:
-            df_jaar = df[df['Year'] == InvoerJaar_2]
+            df_jaar = df.loc[df['Year'] == InvoerJaar_2].copy()
 
+        regio_volgorde = ['Asia', 'Africa', 'Middle East', 'European Union', 'Rest of Europe', 'North America',
+                          'South America', 'Central America and Caribbean', 'Oceania']
+
+        df_jaar['Region'] = pd.Categorical(df_jaar['Region'],
+                                           categories = regio_volgorde)
+        
         fig_jaar = px.box(df_jaar,
                           x = 'Region',
-                          y = 'Life_expectancy')
+                          y = 'Life_expectancy',
+                          category_orders={'Region': regio_volgorde})
 
         fig_jaar.update_layout(title = 'Relatie tussen levensverwachting en de regio',
                                xaxis_title = 'Regio',
