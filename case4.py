@@ -77,7 +77,7 @@ def intro():
     
     st.markdown("")
     st.markdown("""
-    **Datasets samenvoegen**
+    ## Datasets samenvoegen
     
     Deze 2 datasets zijn samengevoegd, maar eerst zijn hiervoor de waarden in de kolommen 'name' uit het geopandas
     dataframe en de waarden in de kolom 'Country' gelijk gemaakt. Hoe de datasets zijn samengevoegd is hieronder te zien:
