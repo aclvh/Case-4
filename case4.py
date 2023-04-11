@@ -185,8 +185,8 @@ def grafieken():
                   color = 'Region')
 
     fig.update_layout(title = 'Gemiddelde levensverwachting per regio',
-                      xaxis_title = 'Jaar',
-                      yaxis_title = 'Levensverwachting',
+                      xaxis_title = 'Datum',
+                      yaxis_title = 'Levensverwachting (in jaren)',
                       legend_title = 'Regio',
                       xaxis = dict(rangeslider = dict(visible = True)))
 
@@ -209,48 +209,48 @@ def grafieken():
         # Boxplot levensverwachting per regio (dropdown)
         jaren = ('Algemeen', 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010,
                     2011, 2012, 2013, 2014, 2015)
-        InvoerJaar = st.selectbox('Selecteer het vak', jaren)
+        InvoerJaar_1 = st.selectbox('Selecteer het vak', jaren)
 
-        if InvoerJaar == 'Algemeen':
-            df_jaar = df
+        if InvoerJaar_1 == 'Algemeen':
+            df_jaar_1 = df
         else:
-            df_jaar = df[df['Year'] == InvoerJaar]
+            df_jaar_1 = df[df['Year'] == InvoerJaar_1]
 
-        fig_jaar = px.box(df_jaar,
-                          x = 'Region',
-                          y = 'Life_expectancy')
+        fig_jaar_1 = px.box(df_jaar_1,
+                            x = 'Region',
+                            y = 'Life_expectancy')
 
-        fig_jaar.update_layout(title = 'Relatie tussen levensverwachting en de regio',
-                               xaxis_title = 'Regio',
-                               yaxis_title = 'Levensverwachting',
-                               yaxis_range = [25, 100],
-                               width = 800)
+        fig_jaar_1.update_layout(title = 'Relatie tussen levensverwachting en de regio',
+                                 xaxis_title = 'Regio',
+                                 yaxis_title = 'Levensverwachting',
+                                 yaxis_range = [25, 100],
+                                 width = 800)
 
-        fig_jaar
+        fig_jaar_1
 
     with col2:
         
         # Boxplot levensverwachting per regio (dropdown)
         jaren = ('Algemeen', 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010,
                     2011, 2012, 2013, 2014, 2015)
-        InvoerJaar = st.selectbox('Selecteer het vak', jaren)
+        InvoerJaar_1 = st.selectbox('Selecteer het vak', jaren)
 
-        if InvoerJaar == 'Algemeen':
-            df_jaar = df
+        if InvoerJaar_2 == 'Algemeen':
+            df_jaar_1 = df
         else:
-            df_jaar = df[df['Year'] == InvoerJaar]
+            df_jaar_2 = df[df['Year'] == InvoerJaar_2]
 
-        fig_jaar = px.box(df_jaar,
-                          x = 'Region',
-                          y = 'Life_expectancy')
+        fig_jaar_2 = px.box(df_jaar_2,
+                            x = 'Region',
+                            y = 'Life_expectancy')
 
-        fig_jaar.update_layout(title = 'Relatie tussen levensverwachting en de regio',
-                               xaxis_title = 'Regio',
-                               yaxis_title = 'Levensverwachting',
-                               yaxis_range = [25, 100],
-                               width = 800)
+        fig_jaar_2.update_layout(title = 'Relatie tussen levensverwachting en de regio',
+                                 xaxis_title = 'Regio',
+                                 yaxis_title = 'Levensverwachting (in jaren)',
+                                 yaxis_range = [25, 100],
+                                 width = 800)
 
-        fig_jaar
+        fig_jaar_2
 
 
 # In[ ]:
