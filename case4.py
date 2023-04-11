@@ -418,7 +418,7 @@ def grafieken():
                                           yaxis_title = 'Percentage',
                                           legend_title = 'Inenting',
                                           xaxis = dict(rangeslider = dict(visible = True)),
-                                          width = 700)
+                                          width = 670)
 
         fig_inenting_afrika
 
@@ -433,6 +433,8 @@ def grafieken():
         percentage mensen dat wordt ingeënt tegen deze ziektes.""")
         
     ###################################################################################################################
+    # Plot 
+    
     col1, col2 = st.columns(2)
 
     with col1:
@@ -449,7 +451,7 @@ def grafieken():
         fig.update_layout(title = "Regressie tussen het gemiddelde percentage ingeënt en de levensverwachting",
                           xaxis_title = "Gemiddeld percentage ingeënt voor verschillende ziekten",
                           yaxis_title = "Levensverwachting in jaren",
-                          width = 700)
+                          width = 670)
 
         fig
 
@@ -470,6 +472,8 @@ def grafieken():
         ook toeneemt.""")
         
     ###################################################################################################################
+    # Plot BMI verschillende regio's
+    
     col1, col2 = st.columns(2)
 
     with col1:
