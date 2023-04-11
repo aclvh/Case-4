@@ -541,6 +541,7 @@ def grafieken():
         fig
     
     with col2:
+        st.markdown("")
         st.markdown("Tekst")
 
 
