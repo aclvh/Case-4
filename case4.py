@@ -449,7 +449,7 @@ def grafieken():
                          trendline = 'ols',
                          trendline_color_override = 'red')
 
-        fig.update_layout(title = "Regressie tussen het gemiddelde percentage ingeënt en de levensverwachting",
+        fig.update_layout(title = "Relatie tussen het gemiddelde percentage ingeënt en de levensverwachting",
                           xaxis_title = "Gemiddeld percentage ingeënt voor verschillende ziekten",
                           yaxis_title = "Levensverwachting in jaren",
                           width = 670)
@@ -475,6 +475,9 @@ def grafieken():
     ###################################################################################################################
     # Plot BMI verschillende regio's
     
+    st.markdown("""
+    ## BMI
+    ### Verdeling BMI per regio""")
     col1, col2 = st.columns(2)
 
     with col1:
@@ -482,7 +485,7 @@ def grafieken():
         regio_keuze = ('Asia', 'Africa', 'Middle East', 'European Union', 'Rest of Europe', 'North America',
                       'South America', 'Central America and Caribbean', 'Oceania')
 
-        InvoerRegio = st.selectbox('Selecteer het jaar', regio_keuze, key = 'Asia')
+        InvoerRegio = st.selectbox('Selecteer de regio', regio_keuze, key = 'Asia')
 
         df_hist = df[df['Region'] == InvoerRegio]
 
@@ -501,13 +504,38 @@ def grafieken():
         fig_BMI.update_layout(title = 'Verdeling BMI',
                               xaxis_title = 'BMI',
                               yaxis_title = 'Aantal',
-                              xaxis_range = [19, 32.5])
+                              xaxis_range = [19, 32.5], 
+                              width = 670)
 
         fig_BMI
     
     with col2:
         st.markdown("""
         In de plot is te zien dat er inderdaad meer mensen in ... zijn met een gezond BMI...""")
+        
+    ###################################################################################################################
+    # Plot relatie tussen BMI en levensverwachting
+    
+    st.markdown("""
+    ### Relatie tussen BMI en levensverwachting""")
+    col1, col2 = st.columns(2)
+
+    with col1:    
+        fig = px.scatter(df,
+                 x = 'BMI',
+                 y = 'Life_expectancy',
+                 trendline='ols',
+                 trendline_color_override = 'red')
+
+        fig.update_layout(title = 'Relatie tussen BMI en de levensverwachting',
+                          xaxis_title = 'BMI',  
+                          yaxis_title = 'Levensverwachting',
+                          width = 670)
+
+        fig
+    
+    with col2:
+        st.markdown("Tekst")
 
 
 # In[ ]:
