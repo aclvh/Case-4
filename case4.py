@@ -352,7 +352,8 @@ def grafieken():
                                  color = 'Inenting tegen',
                                  barmode = 'group',
                                  category_orders = {'Region': regio_volgorde},
-                                 color_discrete_sequence = ['green', 'lightgreen', '#3CB371', '#7FD7A4'])
+#                                  color_discrete_sequence = ['green', 'lightgreen', '#3CB371', '#7FD7A4'],
+                                 color_discrete_sequence = ['red', 'pink', '#3CB371', 'lightblue'])
 
         inentingen.update_layout(title = 'Gemiddeld percentage inentingen tegen ziektes per regio',
                                  xaxis_title = 'Regio',
