@@ -220,8 +220,7 @@ def grafieken():
                           xaxis_title = 'Datum',
                           yaxis_title = 'Levensverwachting (in jaren)',
                           legend_title = 'Regio',
-                          xaxis = dict(rangeslider = dict(visible = True)),
-                          width = 650)
+                          xaxis = dict(rangeslider = dict(visible = True)))
         fig
     
     with col2:
