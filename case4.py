@@ -51,7 +51,7 @@ def intro():
     life_exp_kolom = life_exp.shape[1]
 
     st.code(code_API, language = 'python')
-    st.write("De dataset ziet er nu als volgt uit:", life_exp_head, "De dataset bestaat nu uit ",
+    st.write(life_exp_head, "De dataset bestaat nu uit ",
              life_exp_rijen, " rijen en ", life_exp_kolom, " aantal_kolommen.")
     
     st.markdown("")
@@ -72,10 +72,9 @@ def intro():
     world_kolom = world.shape[1]
 
     st.code(code_geo, language = 'python')
-    st.write("De dataset ziet er nu als volgt uit:", world_head, "De dataset bestaat nu uit ",
+    st.write(world_head, "De dataset bestaat nu uit ",
              world_rijen, " rijen en ", world_kolom, " aantal_kolommen.")
     
-    st.markdown("")
     st.markdown("""---""")
     st.markdown("""
     #### Datasets samenvoegen
@@ -118,6 +117,7 @@ def grafieken():
     df = pd.read_csv('df.csv')
     world = geopandas.read_file(geopandas.datasets.get_path('naturalearth_lowres'))
     
+    
     ###################################################################################################################
     # Eerste stuk tekst pagina
     
@@ -126,17 +126,18 @@ def grafieken():
     Aan de hand van de data zijn verschillende ondervindingen gedaan. Deze zijn hieronder te lezen en te zien in
     verschillende plotjes.""")
     
+    
     ###################################################################################################################
     # Kaart met levensverwachting over de hele wereld
     
     st.markdown("""
-    ## Levensverwachting over de hele wereld
+    ## Levensverwachting op de kaart
     Als eerst is gekeken naar de levensverwachting die mensen hebben in verschillende landen over de jaren heen.""")
     
     jaren = ('2001', '2002', '2003', '2004', '2005', '2006', '2007', '2008', '2009', '2010',
             '2011', '2012', '2013', '2014', '2015')
     
-    col1, col2 = st.columns([1, 5])
+    col1, col2 = st.columns([1, 6])
     
     with col1:
         jaar = col1.radio('Jaar', jaren)
@@ -165,53 +166,83 @@ def grafieken():
 
         st_data = st_folium(m, width = 725, height = 500)
         
+        
     ###################################################################################################################
-    # Lijndiagram levensverwachting over de tijd per regio
+    # Verdeling levensverwachting
     
-    st.markdown("""
-    ## Levensverwachting over de tijd per regio
-    Hieronder is gekeken naar de levensverwachting door de jaren heen per regio.""")
-    
-    # Dataframe voor life expectancy per regio maken
-    df_time = df[['Country', 'Region', 'Year', 'Life_expectancy']]
-
-    # Dataframe sorteren per regio en jaar
-    df_time.sort_values(by = ['Region', 'Year'], inplace = True)
-
-    # Nieuwe kolom met gemiddelde levensverwachting per regio per jaar aanmaken
-    df_time = df_time.groupby(['Region', 'Year'])['Life_expectancy'].mean().reset_index(name = 'Mean_life_expectancy')
-
-    # Kolom datum toevoegen voor mooie plot
-    df_time['Date'] = pd.to_datetime(df_time['Year'].astype(str) + '-01-01')
-
-    fig = px.line(df_time,
-                  y = 'Mean_life_expectancy',
-                  x = 'Date',
-                  color = 'Region')
-
-    fig.update_layout(title = 'Gemiddelde levensverwachting per regio',
-                      xaxis_title = 'Datum',
-                      yaxis_title = 'Levensverwachting (in jaren)',
-                      legend_title = 'Regio',
-                      xaxis = dict(rangeslider = dict(visible = True)))
-
-    st.plotly_chart(fig)
-    
-    st.markdown("""
-    In deze grafiek is te zien dat over de jaren heen de levensverwachting over het algemeen is toegenomen.
-    Wat opvalt is dat de levensverwachting het meest is toegenomen in Afrika.""")
-    
-    ###################################################################################################################
-    # Boxplots voor verdeling levensverwachting in het algemeen of voor specifieke jaren
-    
-    st.markdown("""
-    ## Levensverwachting per regio
-    Hieronder is gekeken naar de verdeling van de levensverwachting per regio.""")
+    st.markdown("## Verdeling levensverwachting")       
     
     col1, col2 = st.columns(2)
 
     with col1:
+        verdeling = px.histogram(df,
+                             x = 'Life_expectancy')
 
+        verdeling.update_layout(title = "Verdeling van de levensverwachting",
+                                xaxis_title = "Levensverwachting",
+                                yaxis_title = "Aantal", 
+                                width = 650)
+        verdeling
+    
+    with col2:
+        st.markdown("""
+        Te zien is dat de meerderheid van de mensen ouder dan 65 lijkt te worden, maar dat de levensverwachting
+        wel linksscheef verdeeld is.""")
+    
+    
+    ###################################################################################################################
+    # Lijndiagram levensverwachting over de tijd per regio
+    
+    st.markdown("## Levensverwachting over de tijd per regio")
+    
+    col1, col2 = st.columns(2)
+
+    with col1:
+        # Dataframe voor life expectancy per regio maken
+        df_time = df.loc[:, ['Country', 'Region', 'Year', 'Life_expectancy']].copy()
+        
+        # Dataframe sorteren per regio en jaar
+        df_time.sort_values(by = ['Region', 'Year'], inplace = True)
+
+        # Nieuwe kolom met gemiddelde levensverwachting per regio per jaar aanmaken
+        df_time = df_time.groupby(['Region', 'Year'])['Life_expectancy'].mean().reset_index(name = 'Mean_life_expectancy')
+
+        # Kolom datum toevoegen voor mooie plot
+        df_time['Date'] = pd.to_datetime(df_time['Year'].astype(str) + '-01-01')
+
+        fig = px.line(df_time,
+                      y = 'Mean_life_expectancy',
+                      x = 'Date',
+                      color = 'Region')
+
+        fig.update_layout(title = 'Gemiddelde levensverwachting per regio',
+                          xaxis_title = 'Datum',
+                          yaxis_title = 'Levensverwachting (in jaren)',
+                          legend_title = 'Regio',
+                          xaxis = dict(rangeslider = dict(visible = True)),
+                          width = 650)
+        fig
+    
+    with col2:
+        st.markdown("""
+        In deze grafiek hier links weergegeven is te zien dat de levensverwachting over het algemeen is toegenomen.
+        Wat opvalt is dat de levensverwachting het meest is toegenomen in Afrika.""")
+    
+    
+    ###################################################################################################################
+    # Boxplots voor verdeling levensverwachting in het algemeen of voor specifieke jaren
+    
+    st.markdown("## Levensverwachting per regio")
+    st.markdown(""")
+    Hieronder is gekeken naar de verdeling van de levensverwachting per regio.""")
+    
+    # Volgorde waarin de regio genoemd zal worden in meerdere plots
+    regio_volgorde = ['Azië', 'Afrika', 'Midden-Oosten', 'Europese Unie', 'Rest van Europa', 'Noord-Amerika',
+                      'Zuid-Amerikca', 'Midden-Amerika en het Caribisch gebied', 'Oceanië']
+
+    col1, col2 = st.columns(2)
+
+    with col1:
         # Eerste boxplot voor vergelijken
         # Keuzemenu
         jaren = ('Algemeen', 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010,
@@ -223,10 +254,6 @@ def grafieken():
         else:
             df_jaar = df.loc[df['Year'] == InvoerJaar_1].copy()
         
-        # Stuk code hieronder is zodat de x-as volgorde voor iedere keuze gelijk blijft
-        regio_volgorde = ['Asia', 'Africa', 'Middle East', 'European Union', 'Rest of Europe', 'North America',
-                  'South America', 'Central America and Caribbean', 'Oceania']
-
         df_jaar['Region'] = pd.Categorical(df_jaar['Region'],
                                            categories = regio_volgorde)
 
@@ -240,11 +267,9 @@ def grafieken():
                                yaxis_title = 'Levensverwachting (in jaren)',
                                yaxis_range = [25, 100],
                                width = 650)
-
         fig_jaar
 
     with col2:
-    
         # Tweede boxplot (voor vergelijken)
         # Keuzemenu
         InvoerJaar_2 = st.selectbox('Selecteer het jaar', jaren, key = 2001)
@@ -253,10 +278,6 @@ def grafieken():
             df_jaar = df
         else:
             df_jaar = df.loc[df['Year'] == InvoerJaar_2].copy()
-
-        # Stuk code hieronder is zodat de x-as volgorde voor iedere keuze gelijk blijft
-        regio_volgorde = ['Asia', 'Africa', 'Middle East', 'European Union', 'Rest of Europe', 'North America',
-                          'South America', 'Central America and Caribbean', 'Oceania']
 
         df_jaar['Region'] = pd.Categorical(df_jaar['Region'],
                                            categories = regio_volgorde)
@@ -271,7 +292,6 @@ def grafieken():
                                yaxis_title = 'Levensverwachting (in jaren)',
                                yaxis_range = [25, 100],
                                width = 650)
-        
         fig_jaar
         
     ###################################################################################################################
