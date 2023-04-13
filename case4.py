@@ -178,7 +178,7 @@ def grafieken():
         verdeling = px.histogram(df,
                              x = 'Life_expectancy')
         
-        verdeling.update_traces(marker_color='#7FD7A4')
+        verdeling.update_traces(marker_color = '#7FD7A4')
         verdeling.update_layout(title = "Verdeling van de levensverwachting",
                                 xaxis_title = "Levensverwachting",
                                 yaxis_title = "Aantal")
@@ -225,6 +225,7 @@ def grafieken():
         fig
     
     with col2:
+        st.markdown("")
         st.markdown("""
         In deze grafiek hier links weergegeven is te zien dat de levensverwachting over het algemeen is toegenomen.
         Wat opvalt is dat de levensverwachting het meest is toegenomen in Afrika.""")
@@ -263,6 +264,7 @@ def grafieken():
                           y = 'Life_expectancy',
                           category_orders = {'Region': regio_volgorde})
 
+        fig_jaar.update_traces(marker_color = '#7FD7A4')
         fig_jaar.update_layout(title = 'Relatie tussen levensverwachting en de regio',
                                xaxis_title = 'Regio',
                                yaxis_title = 'Levensverwachting (in jaren)',
@@ -288,6 +290,7 @@ def grafieken():
                           y = 'Life_expectancy',
                           category_orders={'Region': regio_volgorde})
 
+        fig_jaar.update_traces(marker_color = '#7FD7A4')
         fig_jaar.update_layout(title = 'Relatie tussen levensverwachting en de regio',
                                xaxis_title = 'Regio',
                                yaxis_title = 'Levensverwachting (in jaren)',
