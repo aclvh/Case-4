@@ -647,6 +647,8 @@ def grafieken():
     
     with col2:
         residuals = y_test - y_pred
+        residuals = residuals.dropna()  # Remove any rows with NaN values
+        residuals = residuals.replace([np.inf, -np.inf], np.nan).dropna()  # Remove any rows with inf values
         hist_data = [residuals['Life_expectancy']]
         group_labels = ['distplot']
 
