@@ -176,6 +176,9 @@ def grafieken():
         st_data = st_folium(m1)
 #         width = 725, height = 500
     with col3:
+        # Filter the data based on the selected year
+        df_kaart = df[df['Year'] == int(jaar)].dropna()
+        
         # Kaart maken
         m2 = folium.Map(location = [0,0],
                         zoom_start = 10,
@@ -187,7 +190,7 @@ def grafieken():
         # Choropleth gekozen jaar plotten
         m2.choropleth(geo_data = world,
                       name = 'geometry',
-                      data = df1,
+                      data = df_kaart,
                       columns = ['Country', 'Economy_status_Developed'],
                       key_on = 'feature.properties.name',
                       fill_color = 'YlGn',
