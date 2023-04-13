@@ -365,21 +365,19 @@ def grafieken():
     with col2:
         st.markdown("")
         st.markdown("""
-        Om te onderzoeken of de minder hoge levensverwachting in Africa komt omdat er evenuteel minder ingeënt wordt,
+        Om te onderzoeken of de minder hoge levensverwachting in Afrika komt omdat er evenuteel minder ingeënt wordt,
         is per regio het gemiddelde percentage inentingen per ziekte berekend.
         
         Ook is onderzocht of in andere regio's het gemiddelde percentage inentingen hoger is, wanneer in deze regio's ook
-        een hogere levensverwachting is.""")
+        een hogere levensverwachting is.
+        
+        In afrika is inderdaad het minste percentage ingeënt per ziekte gemiddeld gezien over de jaren heen.""")
         
     
     ###################################################################################################################
     # Plot inentingen in Afrika over de jaren heen
     
     st.markdown("""
-        In afrika is inderdaad het minste percentage ingeënt per ziekte gemiddeld gezien over de jaren heen.
-        In het volgende deel wordt gecontroleerd of dit percentage over de jaren heen is gestegen in plaats van alleen naar
-        het gemiddelde inentingspercentage te kijken.
-        
         ### Inentingen Afrika""")
     
     col1, col2 = st.columns(2)
@@ -432,9 +430,12 @@ def grafieken():
     with col2:
         st.markdown("")
         st.markdown("""
-        In de plot die links wordt weergegeven is inderdaad te zien dat er een sterke stijging is geweest in het
-        percentage wat is ingeënt tegen hepatitis B, polio en difterie. Bij de inentignen tegen de mazelen is deze
-        stijging echter niet te zien.
+        
+        Met behulp van deze grafiek wordt gecontroleerd of het aantal inentingen in Afrika over de jaren heen is
+        gestegen.
+        
+        Uit de plot blijkt inderdaad dat er een sterke stijging is geweest in het percentage mensen wat is ingeënt 
+        tegen hepatitis B, polio en difterie. Bij de inentignen tegen de mazelen is deze stijging echter niet te zien.
 
         Het is aannemelijk om aan te nemen dat de levensverwachting in Afrika is toegenomen door de stijging in het 
         percentage mensen dat wordt ingeënt tegen deze ziektes.""")
