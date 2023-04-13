@@ -297,17 +297,18 @@ def grafieken():
                                yaxis_title = 'Levensverwachting (in jaren)',
                                yaxis_range = [25, 100],
                                width = 650)
-        fig_jaar['layout'].pop('updatemenus')
         fig_jaar
     
     st.markdown("""
-    Uit deze grafieken kan men concluderen dat in Azië, maar vooral in Afrika een duidelijk zichtbare stijging
-    is geweest in de levensverwachting. Ook is de spreiding hier minder geworden over de jaren heen.""")
+    Uit deze grafieken kan worden geconcludeerd dat de levensverwachting over het algemeen is gestegen, maar dat vooral 
+    in Azië en Afrika een duidelijk zichtbare stijging is geweest in de levensverwachting. Ook is de spreiding hier 
+    minder geworden over de jaren heen.""")
         
     ###################################################################################################################
+    # ### Percentage ingeënt per regio (dat voor 4 verschillende ziektes, dus 4 keer)
+    
     # (Kijken of de stijging van de levensverwachting misschien komt door de inentingen)
     # Kijken of de minder hoge levensverwachting in Africa bijvoorbeeld komt doordat er minder wordt ingeënt
-    
     
     st.markdown("""
     ## Inentingen
@@ -315,7 +316,7 @@ def grafieken():
     Om te onderzoeken of de minder hoge levensverwachting in Africa komt omdat er evenuteel minder ingeënt wordt,
     is per regio het gemiddelde percentage inentingen per ziekte berekend.
     
-    Ook is onderzocht of in andere regio's het gemiddelde percentage inentingen hoger is, wanneer in ndie regio's ook 
+    Ook is onderzocht of in andere regio's het gemiddelde percentage inentingen hoger is, wanneer in deze regio's ook 
     een hogere levensverwachting is.""")
     
     df_im = df[['Region', 'Polio', 'Diphtheria', 'Measles', 'Hepatitis_B']]
@@ -331,71 +332,42 @@ def grafieken():
 
     df_im_1 = df_polio.merge(df_dipth, on = 'Region')
     df_im_1 = df_im_1.drop_duplicates()
-    df_im_1.head()
 
     df_im_2 = df_measl.merge(df_hepat, on = 'Region')
     df_im_2 = df_im_2.drop_duplicates()
-    df_im_2.head()
 
     df_im_tot = df_im_1.merge(df_im_2, on = 'Region')
+        
+    # Dataframe omzetten naar een long format zodat er een goede histogram gemaakt kan worden
+    df_long = pd.melt(df_im_tot,
+                      id_vars = 'Region',
+                      var_name = 'Inenting tegen',
+                      value_name = 'percentage')
+
+    df_long.replace(['gem_polio', 'gem_dipth', 'gem_measl', 'gem_hepat'],
+                    ['Polio', 'Difterie', 'Mazelen', 'Hepatitis B'],
+                    inplace = True)
     
     col1, col2 = st.columns(2)
 
     with col1:
-        # plot polio
-        fig_polio = px.histogram(df_im_tot,
-                         y = 'gem_polio',
+        inentingen = px.histogram(df_long,
                          x = 'Region',
+                         y = 'percentage',
+                         color = 'Inenting tegen',
+                         barmode = 'group',
                          category_orders = {'Region': regio_volgorde})
+#                          color_discrete_sequence = ['blue', 'green', 'red', 'orange']
 
-        fig_polio.update_layout(title = 'Gemiddeld percentage ingeënt tegen polio per regio',
-                                xaxis_title = 'Regio',
-                                yaxis_title = 'Percentage',
-                                yaxis_range = [0,100])
+        inentingen.update_layout(title = 'Gemiddeld percentage inentingen tegen ziektes per regio',
+                                 xaxis_title = 'Regio',
+                                 yaxis_title = 'Percentage',
+                                 width = 650)
 
-        fig_polio
-        
-        # Plot dipth
-        fig_dipth = px.histogram(df_im_tot,
-                         y = 'gem_dipth',
-                         x = 'Region', 
-                         category_orders = {'Region': regio_volgorde})
+        inentingen
 
-        fig_dipth.update_layout(title = 'Gemiddeld percentage ingeënt tegen difterie per regio',
-                                xaxis_title = 'Regio',
-                                yaxis_title = 'Percentage', 
-                                yaxis_range = [0,100])
-
-        fig_dipth
-        
     with col2:
-        # Plot measl
-        fig_measl = px.histogram(df_im_tot,
-                         y = 'gem_measl',
-                         x = 'Region',
-                         category_orders = {'Region': regio_volgorde})
-
-        fig_measl.update_layout(title = 'Gemiddeld percentage ingeënt tegen de mazelen per regio',
-                                xaxis_title = 'Regio',
-                                yaxis_title = 'Percentage', 
-                                yaxis_range = [0,100])
-
-        fig_measl
-        
-        # Plot hepat
-        fig_hepat = px.histogram(df_im_tot,
-                         y = 'gem_hepat',
-                         x = 'Region',
-                         category_orders = {'Region': regio_volgorde})
-
-        fig_hepat.update_layout(title = 'Gemiddeld percentage ingeënt tegen hepatitis B per regio',
-                                xaxis_title = 'Regio',
-                                yaxis_title = 'Percentage',
-                                yaxis_range = [0,100])
-#         fig['layout'].pop('updatemenus')
-
-        fig_hepat
-        
+        st.markdown("")
     
     ###################################################################################################################
     # Plot inentingen in Afrika over de jaren heen
