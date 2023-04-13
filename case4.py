@@ -589,7 +589,7 @@ def grafieken():
     y_true.reset_index(inplace = True)
     y_true.drop(['index'], axis=1, inplace = True)
 
-    df_pred = pd.merge(df_y_pred, y_true, left_index=True, right_index=True)
+    df_pred = pd.merge(y_pred, y_true, left_index=True, right_index=True)
     df_pred.rename(columns={0: 'Prediction'}, inplace = True)
     df_pred.head()
     
