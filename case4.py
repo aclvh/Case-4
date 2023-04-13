@@ -616,7 +616,7 @@ def grafieken():
         fig
     
     with col2:
-        r2 = r2_score(y_test, y_pred))
+        r2 = r2_score(y_test, y_pred)
         
         st.markdown("")
         st.markdown("""
