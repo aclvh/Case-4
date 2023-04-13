@@ -76,6 +76,7 @@ def intro():
              world_rijen, " rijen en ", world_kolom, " aantal_kolommen.")
     
     st.markdown("")
+    st.markdown("""---""")
     st.markdown("""
     #### Datasets samenvoegen
     
