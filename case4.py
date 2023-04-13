@@ -510,26 +510,28 @@ def grafieken():
         fig = px.scatter(df,
                          x = 'Infant_deaths',
                          y = 'Life_expectancy',
-                         trendline='ols',
+                         trendline = 'ols',
                          trendline_color_override = 'red',
-                         color_discrete_sequence=['#7FD7A4'])
+                         color_discrete_sequence = ['#7FD7A4'])
 
         fig.update_layout(title = 'Relatie tussen het aantal kinder sterfgevallen en de levensverwachting',
                           xaxis_title = 'Aantal sterfgevallen (per 1000 inwoners)',
-                          yaxis_title = 'Levensverwachting in jaren')
+                          yaxis_title = 'Levensverwachting in jaren',
+                          width = 670)
         fig
         
         # Kinderen onder de 5 jaar
         fig = px.scatter(df,
                          x = 'Under_five_deaths',
                          y = 'Life_expectancy',
-                         trendline='ols',
+                         trendline = 'ols',
                          trendline_color_override = 'red',
-                         color_discrete_sequence=['#7FD7A4'])
+                         color_discrete_sequence = ['#7FD7A4'])
 
         fig.update_layout(title = 'Relatie tussen het aantal sterfgevallen van kinderen onder de 5 jaar en de levensverwachting',
                           xaxis_title = 'Aantal sterfgevallen (per 1000 inwoners)',
-                          yaxis_title = 'Levensverwachting in jaren')
+                          yaxis_title = 'Levensverwachting in jaren',
+                          width = 670)
         fig
         
     with col2:
@@ -537,9 +539,10 @@ def grafieken():
         fig = px.scatter(df,
                          x = 'Adult_mortality',
                          y = 'Life_expectancy',
-                         trendline='ols',
+                         trendline = 'ols',
                          trendline_color_override = 'red',
-                         color_discrete_sequence=['#7FD7A4'])
+                         color_discrete_sequence = ['#7FD7A4'],
+                         width = 670)
 
         fig.update_layout(title = 'Relatie tussen het aantal sterfgevallen van volwassenen en de levensverwachting',
                           xaxis_title = 'Aantal sterfgevallen (per 1000 inwoners)',
@@ -572,7 +575,7 @@ def grafieken():
         y = df_lr[['Life_expectancy']]
 
         # Split de dataset in train en test sets
-        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, random_state = 42)
 
         # Bouw het lineaire regressiemodel
         lr_model = LinearRegression()
@@ -589,29 +592,30 @@ def grafieken():
         y_pred.reset_index(inplace = True)
 
         y_true.reset_index(inplace = True)
-        y_true.drop(['index'], axis=1, inplace = True)
+        y_true.drop(['index'], axis = 1, inplace = True)
 
-        df_pred = pd.merge(y_pred, y_true, left_index=True, right_index=True)
-        df_pred.rename(columns={0: 'Prediction'}, inplace = True)
+        df_pred = pd.merge(y_pred, y_true, left_index = True, right_index = True)
+        df_pred.rename(columns = {0: 'Prediction'}, inplace = True)
         df_pred.head()
 
         ### Plot
         fig = px.scatter(df_pred,
-                         x='Prediction',
-                         y='Life_expectancy')
+                         x = 'Prediction',
+                         y = 'Life_expectancy')
 
         fig.update_traces(marker=dict(color='#7FD7A4'))
 
         # Een lijn toevoegen voor wanneer de voorspelling perfect zou zijn
-        fig.add_trace(go.Scatter(x=[min(df_pred['Prediction']), max(df_pred['Prediction'])],
-                                 y=[min(df_pred['Life_expectancy']), max(df_pred['Life_expectancy'])],
-                                 mode='lines',
-                                 line=dict(color='red')))
+        fig.add_trace(go.Scatter(x = [min(df_pred['Prediction']), max(df_pred['Prediction'])],
+                                 y = [min(df_pred['Life_expectancy']), max(df_pred['Life_expectancy'])],
+                                 mode = 'lines',
+                                 line = dict(color='red')))
 
-        fig.update_layout(title='Voorspelde waarden vs echte waarden',
-                          xaxis_title='Voorspelde waarden',
-                          yaxis_title='Echte waarden',
-                          showlegend=False)
+        fig.update_layout(title = 'Voorspelde waarden vs echte waarden',
+                          xaxis_title = 'Voorspelde waarden',
+                          yaxis_title = 'Echte waarden',
+                          showlegend = False,
+                          width = 670)
 
         fig
     
