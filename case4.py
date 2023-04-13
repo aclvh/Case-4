@@ -148,6 +148,8 @@ def grafieken():
             '2011', '2012', '2013', '2014', '2015')
     
 #     col1, col2 = st.columns([1, 3, 3])
+
+    st.markdown("### Levensverwachting op de kaart")
     col1, col2 = st.columns([1, 1.5])
     
     with col1:
@@ -178,6 +180,7 @@ def grafieken():
         st_data = st_folium(m1, width = 775, height = 500)
 
         
+    st.markdown("### BBP per hoofd van de bevolking op de kaart")
     col1, col2 = st.columns([1, 1.5])
     
     with col1:        
