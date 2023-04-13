@@ -178,7 +178,7 @@ def grafieken():
         verdeling = px.histogram(df,
                              x = 'Life_expectancy')
         
-        verdeling.update_traces(marker_color = '#7FD7A4')
+        verdeling.update_traces(marker_color = '#3eb489')
         verdeling.update_layout(title = "Verdeling van de levensverwachting",
                                 xaxis_title = "Levensverwachting",
                                 yaxis_title = "Aantal")
@@ -265,7 +265,7 @@ def grafieken():
                           y = 'Life_expectancy',
                           category_orders = {'Region': regio_volgorde})
 
-        fig_jaar.update_traces(marker_color = '#7FD7A4')
+        fig_jaar.update_traces(marker_color = '#3eb489')
         fig_jaar.update_layout(title = 'Relatie tussen levensverwachting en de regio',
                                xaxis_title = 'Regio',
                                yaxis_title = 'Levensverwachting (in jaren)',
@@ -291,7 +291,7 @@ def grafieken():
                           y = 'Life_expectancy',
                           category_orders={'Region': regio_volgorde})
 
-        fig_jaar.update_traces(marker_color = '#7FD7A4')
+        fig_jaar.update_traces(marker_color = '#3eb489')
         fig_jaar.update_layout(title = 'Relatie tussen levensverwachting en de regio',
                                xaxis_title = 'Regio',
                                yaxis_title = 'Levensverwachting (in jaren)',
@@ -358,7 +358,8 @@ def grafieken():
 
         inentingen.update_layout(title = 'Gemiddeld percentage inentingen tegen ziektes per regio',
                                  xaxis_title = 'Regio',
-                                 yaxis_title = 'Percentage')
+                                 yaxis_title = 'Percentage',
+                                 width = 670)
         inentingen
 
     with col2:
