@@ -181,8 +181,7 @@ def grafieken():
         verdeling.update_traces(marker_color='#7FD7A4')
         verdeling.update_layout(title = "Verdeling van de levensverwachting",
                                 xaxis_title = "Levensverwachting",
-                                yaxis_title = "Aantal", 
-                                width = 650)
+                                yaxis_title = "Aantal")
         verdeling
     
     with col2:
