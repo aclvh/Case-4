@@ -146,7 +146,7 @@ def grafieken():
     jaren = ('2001', '2002', '2003', '2004', '2005', '2006', '2007', '2008', '2009', '2010',
             '2011', '2012', '2013', '2014', '2015')
     
-    col1, col2 = st.columns([1, 6])
+    col1, col2, col3 = st.columns([1, 3, 3])
     
     with col1:
         jaar = col1.radio('Jaar', jaren)
@@ -156,25 +156,46 @@ def grafieken():
         df_kaart = df[df['Year'] == int(jaar)].dropna()
 
         # Create the map and add it to the second column
-        m = folium.Map(location = [0,0],
-                       zoom_start = 10,
-                       zoom_control = False,
-                       min_zoom = 2,
-                       max_zoom = 2,
-                       tiles = 'openstreetmap')
+        m1 = folium.Map(location = [0,0],
+                        zoom_start = 10,
+                        zoom_control = False,
+                        min_zoom = 2,
+                        max_zoom = 2,
+                        tiles = 'openstreetmap')
 
-        m.choropleth(geo_data = world,
-                     name = 'geometry',
-                     data = df_kaart,
-                     columns = ['Country', 'Life_expectancy'],
-                     key_on = 'feature.properties.name',
-                     fill_color = 'YlGn',
-                     fill_opacity = 0.75,
-                     line_opacity = 0.5,
-                     legend_name = 'Life expectancy')
+        m1.choropleth(geo_data = world,
+                      name = 'geometry',
+                      data = df_kaart,
+                      columns = ['Country', 'Life_expectancy'],
+                      key_on = 'feature.properties.name',
+                      fill_color = 'YlGn',
+                      fill_opacity = 0.75,
+                      line_opacity = 0.5,
+                      legend_name = 'Life expectancy')
 
-        st_data = st_folium(m, width = 725, height = 500)
+        st_data = st_folium(m1)
+#         width = 725, height = 500
+    with col3:
+        # Kaart maken
+        m2 = folium.Map(location = [0,0],
+                        zoom_start = 10,
+                        zoom_control=False,
+                        min_zoom = 2,
+                        max_zoom = 2,
+                        tiles = 'openstreetmap')
+
+        # Choropleth gekozen jaar plotten
+        m2.choropleth(geo_data = world,
+                      name = 'geometry',
+                      data = df1,
+                      columns = ['Country', 'Economy_status_Developed'],
+                      key_on = 'feature.properties.name',
+                      fill_color = 'YlGn',
+                      fill_opacity = 0.75,
+                      line_opacity = 0.5,
+                      legend_name = 'Ontwikkelingsstatus economie')
         
+        mst_data = st_folium(m2)
         
     ###################################################################################################################
     # Verdeling levensverwachting
@@ -596,7 +617,7 @@ def grafieken():
                                  mode = 'lines',
                                  line = dict(color='red')))
 
-        fig.update_layout(title = 'Voorspelde waarden vs echte waarden',
+        fig.update_layout(title = 'Voorspelde waarden vs echte waarden van de levensverwachting',
                           xaxis_title = 'Voorspelde waarden',
                           yaxis_title = 'Echte waarden',
                           showlegend = False,
@@ -608,6 +629,7 @@ def grafieken():
     with col2:
         r2 = r2_score(df_pred['Life_expectancy'], df_pred['Prediction'])
         
+        st.markdown("")
         st.markdown("")
         st.markdown("""
         Bij dit model is gecontroleerd of de residuen normaal verdeeld zijn m.b.v een normaliteitsdiagram en de 
