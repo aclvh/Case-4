@@ -129,7 +129,7 @@ def grafieken():
     # Eerste stuk tekst pagina
     
     st.markdown("""
-    # Inzicht in data m.b.v. grafieken.
+    # Inzicht in data met behulp van grafieken
     Aan de hand van de data zijn verschillende ondervindingen gedaan. Deze zijn hieronder te lezen en te zien in
     verschillende plotjes.""")
     
@@ -660,8 +660,7 @@ def grafieken():
                           xaxis_title = 'Residu',
                           yaxis_title = 'Aantal',
                           showlegend = False)
-
-        res
+        st.pyplot(res)
     
     r2 = r2_score(df_pred['Life_expectancy'], df_pred['Prediction'])
         
