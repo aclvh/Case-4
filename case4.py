@@ -647,34 +647,15 @@ def grafieken():
     
     with col2:
         residuals = y_test - y_pred
-        residuals = residuals.dropna()  # Remove any rows with NaN values
-        residuals = residuals.replace([np.inf, -np.inf], np.nan).dropna()  # Remove any rows with inf values
-        hist_data = [residuals['Life_expectancy']]
-        group_labels = ['distplot']
+        res = px.histogram(residuals)
 
-#         res = ff.create_distplot(hist_data,
-#                                  group_labels)
-#         #                          curve_type='normal'
+        res.update_traces(marker_color = '#7FD7A4')
+        res.update_layout(title = "Verdeling van de residuen",
+                          xaxis_title="Levensverwachting",
+                          yaxis_title = "Aantal",
+                          showlegend = False)
+        res
 
-#         res.update_traces(marker_color = '#7FD7A4')
-
-#         res.update_layout(title = 'Verdeling residuen',
-#                           xaxis_title = 'Residu',
-#                           yaxis_title = 'Aantal',
-#                           showlegend = False)
-#         st.pyplot(res)
-        
-        if len(hist_data[0]) > 0:
-            res = ff.create_distplot(hist_data, group_labels)
-            res.update_traces(marker_color='#7FD7A4')
-            res.update_layout(title='Verdeling residuen',
-                              xaxis_title='Residu',
-                              yaxis_title='Aantal',
-                              showlegend=False)
-            st.pyplot(res)
-        else:
-            st.write("Error: Empty sequence passed to create_distplot().")
-    
     r2 = r2_score(df_pred['Life_expectancy'], df_pred['Prediction'])
         
     st.markdown("""
