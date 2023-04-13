@@ -653,7 +653,8 @@ def grafieken():
         res.update_layout(title = "Verdeling van de residuen",
                           xaxis_title="Levensverwachting",
                           yaxis_title = "Aantal",
-                          showlegend = False)
+                          showlegend = False,
+                          width = 650)
         res
 
     r2 = r2_score(df_pred['Life_expectancy'], df_pred['Prediction'])
