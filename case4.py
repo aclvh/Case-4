@@ -172,7 +172,7 @@ def grafieken():
     
     st.markdown("## Verdeling levensverwachting")       
     
-    col1, col2 = st.columns([2, 1])
+    col1, col2 = st.columns([1.5, 1])
 
     with col1:
         verdeling = px.histogram(df,
@@ -196,7 +196,7 @@ def grafieken():
     
     st.markdown("## Levensverwachting over de tijd per regio")
     
-    col1, col2 = st.columns([2, 1])
+    col1, col2 = st.columns([1.5, 1])
 
     with col1:
         # Dataframe voor life expectancy per regio maken
