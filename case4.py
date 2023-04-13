@@ -141,7 +141,8 @@ def grafieken():
     
     st.markdown("""
     ## Levensverwachting op de kaart
-    Als eerst is gekeken naar de levensverwachting die mensen hebben in verschillende landen over de jaren heen.""")
+    Als eerst is gekeken naar de levensverwachting die mensen hebben in verschillende landen over de jaren heen.
+    In het keuzemenu hieronder kan worden bepaald voor welk jaar men deze gegevens wil bekijken.""")
     
     jaren = ('2001', '2002', '2003', '2004', '2005', '2006', '2007', '2008', '2009', '2010',
             '2011', '2012', '2013', '2014', '2015')
@@ -151,6 +152,15 @@ def grafieken():
     
     with col1:
         jaar = col1.radio('Jaar', jaren)
+        
+        st.markdown("""
+        Rechts is te zien wat de gemiddelde levensverwachting is per land en of dit hoog/laag is ten opzichte van 
+        andere landen.
+        
+        Wanneer een land zwart gekleurd is is geen informatie bekend over dit land.
+        
+        Wat opvalt is dat de levensverwachting in Amerika, Europa en Oceanië gemiddeld gezien hoog is en in Afrika de
+        levensverwachting laag.""")
     
     with col2:
         # Filter the data based on the selected year
@@ -175,7 +185,7 @@ def grafieken():
                       legend_name = 'Life expectancy')
 
         st_data = st_folium(m1)
-#         width = 725, height = 500
+        # , width = 725, height = 500
 
         # Kaart ontwikkelingsstatus maken
         m2 = folium.Map(location = [0,0],
@@ -189,14 +199,15 @@ def grafieken():
         m2.choropleth(geo_data = world,
                       name = 'geometry',
                       data = df_kaart,
-                      columns = ['Country', 'Economy_status_Developed'],
+                      columns = ['Country', 'GDP_per_capita'],
                       key_on = 'feature.properties.name',
                       fill_color = 'YlGn',
                       fill_opacity = 0.75,
                       line_opacity = 0.5,
-                      legend_name = 'Ontwikkelingsstatus economie')
+                      legend_name = 'BBP per hoofd van de bevolking')
         
         mst_data = st_folium(m2)
+        # , width = 725, height = 500
         
     ###################################################################################################################
     # Verdeling levensverwachting
