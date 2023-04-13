@@ -455,7 +455,8 @@ def grafieken():
                          y = 'Life_expectancy',
                          color_discrete_sequence=['#7FD7A4'],
                          trendline='ols',
-                         trendline_color_override = 'red')
+                         trendline_color_override = 'red',
+                         width = 670)
 
         fig.update_layout(title = "Regressie tussen het gemiddelde percentage ingeënt en de levensverwachting",
                                  xaxis_title = "Gemiddeld percentage ingeënt voor verschillende ziekten",
