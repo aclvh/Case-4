@@ -585,14 +585,14 @@ def grafieken():
 
         ### Plot
         fig = px.scatter(df_pred,
-                         x = 'Prediction',
-                         y = 'Life_expectancy')
+                         x = 'Life_expectancy',
+                         y = 'Prediction')
 
-        fig.update_traces(marker=dict(color='#7FD7A4'))
+        fig.update_traces(marker = dict(color = '#7FD7A4'))
 
         # Een lijn toevoegen voor wanneer de voorspelling perfect zou zijn
-        fig.add_trace(go.Scatter(x = [min(df_pred['Prediction']), max(df_pred['Prediction'])],
-                                 y = [min(df_pred['Life_expectancy']), max(df_pred['Life_expectancy'])],
+        fig.add_trace(go.Scatter(x = [35, 85],
+                                 y = [35, 85],
                                  mode = 'lines',
                                  line = dict(color='red')))
 
@@ -600,7 +600,8 @@ def grafieken():
                           xaxis_title = 'Voorspelde waarden',
                           yaxis_title = 'Echte waarden',
                           showlegend = False,
-                          width = 670)
+                          xaxis_range = [35, 85],
+                          yaxis_range = [35, 85])
 
         fig
     
