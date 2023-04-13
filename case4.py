@@ -616,7 +616,7 @@ def grafieken():
         fig
     
     with col2:
-        r2 = r2_score(y_true, y_pred)
+        r2 = r2_score(df_pred['Life_expectancy'], df_pred['Prediction'])
         
         st.markdown("")
         st.markdown("""
