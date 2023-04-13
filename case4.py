@@ -673,10 +673,11 @@ def grafieken():
     r2 = r2_score(df_pred['Life_expectancy'], df_pred['Prediction'])
         
     st.markdown("""
-    Bij dit model is gecontroleerd of de residuen normaal verdeeld zijn. Dit is gedaan m.b.v
-    * een normaliteitsdiagram en de bijbehorende p-waarde en 
-    * een histogram
-    Op deze manier is gecontroleerd of een lineair regressiemodel wel goed model was om te gebruiken.
+    Bij dit model is gecontroleerd of de residuen normaal verdeeld zijn. Aangezien een lineair regressiemodel anders
+    waarschijnlijk geen goed passend model is voor deze variabelen.
+    Dit is gecontroleerd met behulp van:
+    * Een normaliteitsdiagram en 
+    * Een histogram
     Hieruit kan men concluderen dat de residuen normaal verdeeld zijn en dat het lineaire regressiemodel waarschijnlijk
     goed past.""")
     st.write("Het model heeft een regressiescore van ", r2, ".")
