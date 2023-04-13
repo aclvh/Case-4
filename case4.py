@@ -495,12 +495,12 @@ def grafieken():
     # Variabele sterfgevallen
     st.markdown("""---""")
     st.markdown("""
-    ## Relatie tussen het aantal sterfgevallen per 100 inwoners en de levensverwachting
+    ## Relatie tussen het aantal sterfgevallen en de levensverwachting
     Na het maken van een heatmap bleek dat nog drie variabelen een sterke relatie hadden met de variabele
     levensverwachting. Dit waren de variabelen:
-    * Infant_deaths: Vertegenwoordigt kindersterfte per 1000 inwoners
-    * Under_five_deaths: Vertegenwoordigt sterfgevallen van kinderen jonger dan vijf jaar per 1000 inwoners
-    * Adult_mortality: Vertegenwoordigt sterfgevallen van volwassenen per 1000 inwoners
+    * **Infant_deaths**: Vertegenwoordigt kindersterfte per 1000 inwoners
+    * **Under_five_deaths**: Vertegenwoordigt sterfgevallen van kinderen jonger dan vijf jaar per 1000 inwoners
+    * **Adult_mortality**: Vertegenwoordigt sterfgevallen van volwassenen per 1000 inwoners
     De lineaire relatie tussen deze drie variabelen en de levensverwachting wordt hieronder weergegeven:""")
     
     col1, col2, col3 = st.columns(3)
@@ -516,7 +516,7 @@ def grafieken():
 
         fig.update_layout(title = 'Relatie tussen het aantal kinder sterfgevallen en de levensverwachting',
                           xaxis_title = 'Aantal sterfgevallen (per 1000 inwoners)',
-                          yaxis_title = 'Levensverwachting in jaren')
+                          yaxis_title = 'Levensverwachting in jaren',width = 400)
         fig
         
     with col2:
@@ -530,7 +530,7 @@ def grafieken():
 
         fig.update_layout(title = 'Relatie tussen het aantal sterfgevallen van kinderen onder de 5 jaar en de levensverwachting',
                           xaxis_title = 'Aantal sterfgevallen (per 1000 inwoners)',
-                          yaxis_title = 'Levensverwachting in jaren')
+                          yaxis_title = 'Levensverwachting in jaren',width = 400)
         fig
         
     with col3:
@@ -540,7 +540,7 @@ def grafieken():
                          y = 'Life_expectancy',
                          trendline='ols',
                          trendline_color_override = 'red',
-                         color_discrete_sequence=['#7FD7A4'])
+                         color_discrete_sequence=['#7FD7A4'],width = 400)
 
         fig.update_layout(title = 'Relatie tussen het aantal sterfgevallen van volwassenen en de levensverwachting',
                           xaxis_title = 'Aantal sterfgevallen (per 1000 inwoners)',
