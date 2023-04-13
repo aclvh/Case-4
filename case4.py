@@ -647,14 +647,22 @@ def grafieken():
     
     with col2:
         residuals = df_pred['Life_expectancy'] - df_pred['Prediction']
-        res = px.histogram(residuals)
-
+#         res = px.histogram(residuals)
+# 
+#         res.update_traces(marker_color = '#7FD7A4')
+#         res.update_layout(title = "Verdeling van de residuen",
+#                           xaxis_title="Levensverwachting",
+#                           yaxis_title = "Aantal",
+#                           showlegend = False,
+#                           width = 650)
+#         res
+        
         res.update_traces(marker_color = '#7FD7A4')
-        res.update_layout(title = "Verdeling van de residuen",
-                          xaxis_title="Levensverwachting",
-                          yaxis_title = "Aantal",
-                          showlegend = False,
-                          width = 650)
+
+        res.update_layout(title = 'Verdeling residuen',
+                          xaxis_title = 'Residu',
+                          yaxis_title = 'Aantal',
+                          showlegend = False)
         res
 
     r2 = r2_score(df_pred['Life_expectancy'], df_pred['Prediction'])
