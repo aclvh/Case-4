@@ -193,7 +193,7 @@ def grafieken():
         Wanneer men dit vergelijkt met de kaart die gaat over het BBP per hoofd van de bevolking per land, dan valt
         het op dat op ongeveer dezelfde plekken het BBP per hoofd van de bevolking ook hoger is.""")
 
-        
+    with col2:
         # Kaart ontwikkelingsstatus maken
         m2 = folium.Map(location = [0,0],
                         zoom_start = 10,
