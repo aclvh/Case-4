@@ -352,8 +352,9 @@ def grafieken():
                                  color = 'Inenting tegen',
                                  barmode = 'group',
                                  category_orders = {'Region': regio_volgorde},
-#                                  color_discrete_sequence = ['green', 'lightgreen', '#3CB371', '#7FD7A4'],
-                                 color_discrete_sequence = ['red', 'pink', '#3CB371', 'lightblue'])
+                                 color_discrete_sequence = ['red', 'pink', '#3eb489', '#3776ab'])
+#                                  color_discrete_sequence = ['green', 'lightgreen', '#3CB371', '#7FD7A4']
+#                                  color_discrete_sequence = ['red', 'pink', '#3CB371', 'lightblue']
 
         inentingen.update_layout(title = 'Gemiddeld percentage inentingen tegen ziektes per regio',
                                  xaxis_title = 'Regio',
@@ -384,7 +385,7 @@ def grafieken():
 
     with col1:
         # Dataframe met alleen het gebied Afrika
-        df_afrika = df[df['Region'] == 'Africa']
+        df_afrika = df[df['Region'] == 'Afrika']
 
         # Dataframe voor life expectancy per regio maken
         df_afrika = df_afrika[['Country', 'Region', 'Year', 'Hepatitis_B', 'Measles', 'Polio', 'Diphtheria']]
@@ -394,16 +395,16 @@ def grafieken():
 
         # Nieuwe kolom met gemiddelde percentage ingeënt per ziekte maken
         df_afrika_hepa = df_afrika.groupby(['Year'])['Hepatitis_B'].mean().reset_index(name = 'Mean')
-        df_afrika_hepa['Inenting'] = 'Hepatitits_B'
+        df_afrika_hepa['Inenting'] = 'Hepatitits B'
 
         df_afrika_meas = df_afrika.groupby(['Year'])['Measles'].mean().reset_index(name = 'Mean')
-        df_afrika_meas['Inenting'] = 'Measles'
+        df_afrika_meas['Inenting'] = 'Mazelen'
 
         df_afrika_polio = df_afrika.groupby(['Year'])['Polio'].mean().reset_index(name = 'Mean')
         df_afrika_polio['Inenting'] = 'Polio'
 
         df_afrika_dipth = df_afrika.groupby(['Year'])['Diphtheria'].mean().reset_index(name = 'Mean')
-        df_afrika_dipth['Inenting'] = 'Diphtheria'
+        df_afrika_dipth['Inenting'] = 'Difterie'
 
         # Nieuwe dataframes per ziekte samenvoegen
         df_inenting_1 = pd.merge(df_afrika_hepa, df_afrika_meas, how = 'outer')
@@ -412,20 +413,20 @@ def grafieken():
 
         # Kolom datum toevoegen voor mooie plot
         df_inenting['Date'] = pd.to_datetime(df_time['Year'].astype(str) + '-01-01')
-        
-        fig_inenting_afrika = px.line(df_inenting,
-                                      y = 'Mean',
-                                      x = 'Date',
-                                      color = 'Inenting')
 
-        fig_inenting_afrika.update_layout(title = 'Gemiddelde percentage ingeënt per ziekte',
-                                          xaxis_title = 'Datum',
-                                          yaxis_title = 'Percentage',
-                                          legend_title = 'Inenting',
-                                          xaxis = dict(rangeslider = dict(visible = True)),
-                                          width = 670)
+        fig = px.line(df_inenting,
+                      y = 'Mean',
+                      x = 'Date',
+                      color = 'Inenting',
+                      color_discrete_sequence = ['red', 'pink', '#3eb489', '#3776ab'])
 
-        fig_inenting_afrika
+        fig.update_layout(title = 'Gemiddelde percentage ingeënt per ziekte',
+                          xaxis_title = 'Datum',
+                          yaxis_title = 'Percentage',
+                          legend_title = 'Inenting',
+                          xaxis = dict(rangeslider = dict(visible = True)))
+
+        fig
 
     with col2:
         st.markdown("")
