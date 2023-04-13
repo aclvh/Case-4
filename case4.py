@@ -503,7 +503,7 @@ def grafieken():
     * **Adult_mortality**: Vertegenwoordigt sterfgevallen van volwassenen per 1000 inwoners
     De lineaire relatie tussen deze drie variabelen en de levensverwachting wordt hieronder weergegeven:""")
     
-    col1, col2, col3 = st.columns(3)
+    col1, col2 = st.columns(2)
 
     with col1:
         # Kinderen
@@ -516,10 +516,9 @@ def grafieken():
 
         fig.update_layout(title = 'Relatie tussen het aantal kinder sterfgevallen en de levensverwachting',
                           xaxis_title = 'Aantal sterfgevallen (per 1000 inwoners)',
-                          yaxis_title = 'Levensverwachting in jaren',width = 400)
+                          yaxis_title = 'Levensverwachting in jaren')
         fig
         
-    with col2:
         # Kinderen onder de 5 jaar
         fig = px.scatter(df,
                          x = 'Under_five_deaths',
@@ -530,17 +529,17 @@ def grafieken():
 
         fig.update_layout(title = 'Relatie tussen het aantal sterfgevallen van kinderen onder de 5 jaar en de levensverwachting',
                           xaxis_title = 'Aantal sterfgevallen (per 1000 inwoners)',
-                          yaxis_title = 'Levensverwachting in jaren',width = 400)
+                          yaxis_title = 'Levensverwachting in jaren')
         fig
         
-    with col3:
+    with col2:
         # Volwassenen
         fig = px.scatter(df,
                          x = 'Adult_mortality',
                          y = 'Life_expectancy',
                          trendline='ols',
                          trendline_color_override = 'red',
-                         color_discrete_sequence=['#7FD7A4'],width = 400)
+                         color_discrete_sequence=['#7FD7A4'])
 
         fig.update_layout(title = 'Relatie tussen het aantal sterfgevallen van volwassenen en de levensverwachting',
                           xaxis_title = 'Aantal sterfgevallen (per 1000 inwoners)',
@@ -555,63 +554,76 @@ def grafieken():
     ## Lineair regressiemodel
     Met behulp van alle voorgaande informatie is een lineair regressiemodel gemaakt die met behulp van de volgende
     variabelen de gemiddelde levensverwachting in een land kan voorspellen:
-    * var1
-    *""")
+    * Infant_deaths
+    * Adult_mortality
+    * Hepatitis B
+    * Mazelen
+    * Polio
+    * Difterie""")
     
-    df_lr = df.copy()
-    df_lr.dropna(inplace = True)
+    col1, col2 = st.columns(2)
 
-    # Selecteer de onafhankelijke variabelen (features) en afhankelijke variabele (target)
-    X = df_lr[['Infant_deaths', 'Adult_mortality', 'Hepatitis_B', 'Measles', 'Polio', 'Diphtheria']]
+    with col1:
+        df_lr = df.copy()
+        df_lr.dropna(inplace = True)
 
-    # Economy_status_Developed
-    # Economy_status_Developing
+        # Selecteer de onafhankelijke variabelen (features) en afhankelijke variabele (target)
+        X = df_lr[['Infant_deaths', 'Adult_mortality', 'Hepatitis_B', 'Measles', 'Polio', 'Diphtheria']]
+        y = df_lr[['Life_expectancy']]
 
-    y = df_lr[['Life_expectancy']]
+        # Split de dataset in train en test sets
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-    # Split de dataset in train en test sets
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+        # Bouw het lineaire regressiemodel
+        lr_model = LinearRegression()
 
-    # Bouw het lineaire regressiemodel
-    lr_model = LinearRegression()
+        # Train het model op de train set
+        lr_model.fit(X_train, y_train)
 
-    # Train het model op de train set
-    lr_model.fit(X_train, y_train)
+        # Voorspel de levensverwachting op de test set
+        y_pred = lr_model.predict(X_test)
+        y_true = y_test
 
-    # Voorspel de levensverwachting op de test set
-    y_pred = lr_model.predict(X_test)
-    y_true = y_test
+        ### Omzetten naar een dataframe voor plot
+        y_pred = pd.DataFrame(y_pred)
+        y_pred.reset_index(inplace = True)
+
+        y_true.reset_index(inplace = True)
+        y_true.drop(['index'], axis=1, inplace = True)
+
+        df_pred = pd.merge(y_pred, y_true, left_index=True, right_index=True)
+        df_pred.rename(columns={0: 'Prediction'}, inplace = True)
+        df_pred.head()
+
+        ### Plot
+        fig = px.scatter(df_pred,
+                         x='Prediction',
+                         y='Life_expectancy')
+
+        fig.update_traces(marker=dict(color='#7FD7A4'))
+
+        # Een lijn toevoegen voor wanneer de voorspelling perfect zou zijn
+        fig.add_trace(go.Scatter(x=[min(df_pred['Prediction']), max(df_pred['Prediction'])],
+                                 y=[min(df_pred['Life_expectancy']), max(df_pred['Life_expectancy'])],
+                                 mode='lines',
+                                 line=dict(color='red')))
+
+        fig.update_layout(title='Voorspelde waarden vs echte waarden',
+                          xaxis_title='Voorspelde waarden',
+                          yaxis_title='Echte waarden',
+                          showlegend=False)
+
+        fig
     
-    ### Omzetten naar een dataframe voor plot
-    y_pred = pd.DataFrame(y_pred)
-    y_pred.reset_index(inplace = True)
-
-    y_true.reset_index(inplace = True)
-    y_true.drop(['index'], axis=1, inplace = True)
-
-    df_pred = pd.merge(y_pred, y_true, left_index=True, right_index=True)
-    df_pred.rename(columns={0: 'Prediction'}, inplace = True)
-    df_pred.head()
-    
-    ### Plot
-    fig = px.scatter(df_pred,
-                     x='Prediction',
-                     y='Life_expectancy')
-
-    fig.update_traces(marker=dict(color='#7FD7A4'))
-
-    # Een lijn toevoegen voor wanneer de voorspelling perfect zou zijn
-    fig.add_trace(go.Scatter(x=[min(df_pred['Prediction']), max(df_pred['Prediction'])],
-                             y=[min(df_pred['Life_expectancy']), max(df_pred['Life_expectancy'])],
-                             mode='lines',
-                             line=dict(color='red')))
-
-    fig.update_layout(title='Voorspelde waarden vs echte waarden',
-                      xaxis_title='Voorspelde waarden',
-                      yaxis_title='Echte waarden',
-                      showlegend=False)
-
-    fig
+    with col2:
+        r2 = r2_score(y_test, y_pred))
+        
+        st.markdown("")
+        st.markdown("""
+        bij dit model is gecontroleerd of de residuen normaal verdeeld zijn m.b.v een normaliteitsdiagram en de 
+        bijbehorende p-waarde om te controleren of een lineair regressiemodel wel een goed model was.
+        De residuen waren normaal verdeeld.""")
+        st.write("Het model heeft een regressiescore van, ", r2, ".")
 
 
 # In[ ]:
