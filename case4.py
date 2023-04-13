@@ -147,7 +147,7 @@ def grafieken():
             '2011', '2012', '2013', '2014', '2015')
     
 #     col1, col2 = st.columns([1, 3, 3])
-    col1, col2 = st.columns([1.5, 1])
+    col1, col2 = st.columns([1, 1.5])
     
     with col1:
         jaar = col1.radio('Jaar', jaren)
