@@ -184,8 +184,7 @@ def grafieken():
                       line_opacity = 0.5,
                       legend_name = 'Life expectancy')
 
-        st_data = st_folium(m1)
-        # , width = 725, height = 500
+        st_data = st_folium(m1, width = 725, height = 500)
 
         # Kaart ontwikkelingsstatus maken
         m2 = folium.Map(location = [0,0],
@@ -206,8 +205,8 @@ def grafieken():
                       line_opacity = 0.5,
                       legend_name = 'BBP per hoofd van de bevolking')
         
-        mst_data = st_folium(m2)
-        # , width = 725, height = 500
+        mst_data = st_folium(m2, width = 725, height = 500)
+    
         
     ###################################################################################################################
     # Verdeling levensverwachting
