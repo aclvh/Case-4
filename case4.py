@@ -660,7 +660,7 @@ def grafieken():
         group_labels = ['distplot']
         res = ff.create_distplot(residuals,
                                  group_labels)
-                                 curve_type='normal'
+#                                  curve_type='normal'
         res.update_traces(marker_color = '#7FD7A4')
 
         res.update_layout(title = 'Verdeling residuen',
