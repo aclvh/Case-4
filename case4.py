@@ -609,10 +609,10 @@ def grafieken():
         
         st.markdown("")
         st.markdown("""
-        bij dit model is gecontroleerd of de residuen normaal verdeeld zijn m.b.v een normaliteitsdiagram en de 
+        Bij dit model is gecontroleerd of de residuen normaal verdeeld zijn m.b.v een normaliteitsdiagram en de 
         bijbehorende p-waarde om te controleren of een lineair regressiemodel wel een goed model was.
         De residuen waren normaal verdeeld.""")
-        st.write("Het model heeft een regressiescore van, ", r2, ".")
+        st.write("Het model heeft een regressiescore van ", r2, ".")
 
 
 # In[ ]:
