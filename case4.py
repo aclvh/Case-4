@@ -16,17 +16,15 @@ def intro():
     import pandas as pd
     import geopandas
     
-    st.write("# Case 4 – Maken van een dashboard")
+    st.write("# Case 4 – Dashboard levensverwachting")
 #     st.sidebar.success("Selecteer een pagina.")
 
     st.markdown("""
-    In dit project is een data-analyse gedaan over de verandering van de levensverwachting over de hele wereld
-    en over verschillende invloeden hierop.
-    
-    Voor dit project is gebruik gemaakt van meerdere datasets:""")
+    In dit dashboard is een analyse te zien over de levensverwachting van landen over de hele wereld. Voor de tot stand
+    koming van dit dashboard is gebruik gemaakt van meerdere datasets:""")
     
     st.markdown("""
-    **Levensverwachting dataset**
+    **1. Levensverwachting dataset**
     
     Een dataset van kaggle gebruikt die gaat over de levensverwachting in landen over de hele wereld door de jaren heen 
     (2000 t/m 2015).
@@ -56,7 +54,7 @@ def intro():
     
     st.markdown("")
     st.markdown("""
-    **Wereld dataset**
+    **2. Wereld dataset**
     
     Ook is gewerkt met een geopandas dataset die gaat over landen over de hele wereld.
     Deze is als volgt ingeladen:""")
@@ -175,8 +173,7 @@ def grafieken():
                       line_opacity = 0.5,
                       legend_name = 'Life expectancy')
 
-        st_data = st_folium(m1)
-# , width = 775, height = 500
+        st_data = st_folium(m1, width = 750, height = 500)
         
     st.markdown("### BBP per hoofd van de bevolking op de kaart")
     col1, col2 = st.columns([1, 1.5])
@@ -214,7 +211,7 @@ def grafieken():
                       line_opacity = 0.5,
                       legend_name = 'BBP per hoofd van de bevolking')
         
-        mst_data = st_folium(m2)
+        mst_data = st_folium(m2, width = 750, height = 500)
     
         
     ###################################################################################################################
