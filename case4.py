@@ -235,8 +235,9 @@ def grafieken():
     # Boxplots voor verdeling levensverwachting in het algemeen of voor specifieke jaren
     
     st.markdown("## Levensverwachting per regio")
-    st.markdown(""")
-    Hieronder is gekeken naar de verdeling van de levensverwachting per regio.""")
+    st.markdown("""
+    Hieronder is de verdeling van de levensverwachting per regio te zien. Deze kan in het algemeen worden bekeken,
+    maar kan ook over verschillende jaren met elkaar worden vergeleken.""")
     
     # Volgorde waarin de regio genoemd zal worden in meerdere plots
     regio_volgorde = ['Azië', 'Afrika', 'Midden-Oosten', 'Europese Unie', 'Rest van Europa', 'Noord-Amerika',
@@ -296,7 +297,12 @@ def grafieken():
                                yaxis_title = 'Levensverwachting (in jaren)',
                                yaxis_range = [25, 100],
                                width = 650)
+        fig_jaar['layout'].pop('updatemenus')
         fig_jaar
+    
+    st.markdown("""
+    Uit deze grafieken kan men concluderen dat in Azië, maar vooral in Afrika een duidelijk zichtbare stijging
+    is geweest in de levensverwachting. Ook is de spreiding hier minder geworden over de jaren heen.""")
         
     ###################################################################################################################
     # (Kijken of de stijging van de levensverwachting misschien komt door de inentingen)
@@ -386,6 +392,7 @@ def grafieken():
                                 xaxis_title = 'Regio',
                                 yaxis_title = 'Percentage',
                                 yaxis_range = [0,100])
+#         fig['layout'].pop('updatemenus')
 
         fig_hepat
         
