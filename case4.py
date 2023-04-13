@@ -425,8 +425,8 @@ def grafieken():
                           xaxis_title = 'Datum',
                           yaxis_title = 'Percentage',
                           legend_title = 'Inenting',
-                          xaxis = dict(rangeslider = dict(visible = True)))
-
+                          xaxis = dict(rangeslider = dict(visible = True)),
+                          width = 670)
         fig
 
     with col2:
@@ -460,7 +460,6 @@ def grafieken():
         fig.update_layout(title = "Regressie tussen het gemiddelde percentage ingeënt en de levensverwachting",
                                  xaxis_title = "Gemiddeld percentage ingeënt voor verschillende ziekten",
                                  yaxis_title = "Levensverwachting in jaren")
-
         fig
 
     with col2:
@@ -479,76 +478,6 @@ def grafieken():
         ook toeneemt.""")
         
     ###################################################################################################################
-    # Plot BMI verschillende regio's
-    
-    st.markdown("""
-    ## BMI
-    ### Verdeling BMI per regio""")
-    col1, col2 = st.columns(2)
-
-    with col1:
-    
-        regio_keuze = ('Asia', 'Africa', 'Middle East', 'European Union', 'Rest of Europe', 'North America',
-                      'South America', 'Central America and Caribbean', 'Oceania')
-
-        InvoerRegio = st.selectbox('Selecteer de regio', regio_keuze, key = 'Asia')
-
-        df_hist = df[df['Region'] == InvoerRegio]
-
-        fig_BMI = px.histogram(df_hist,
-                               x = 'BMI')
-
-        if InvoerRegio == 'Asia':
-            fig_BMI.add_vline(x = 23,
-                              line_dash = 'dash',
-                              line_color = 'firebrick')
-        else:
-            fig_BMI.add_vline(x = 25,
-                              line_dash = 'dash',
-                              line_color = 'firebrick')
-
-        fig_BMI.update_layout(title = 'Verdeling BMI',
-                              xaxis_title = 'BMI',
-                              yaxis_title = 'Aantal',
-                              xaxis_range = [19, 32.5], 
-                              width = 670)
-
-        fig_BMI
-    
-    with col2:
-        st.markdown("")
-        st.markdown("")
-        st.markdown("")
-        st.markdown("")
-        st.markdown("")
-        st.markdown("")
-        st.markdown("""
-        In de plot is te zien dat er inderdaad meer mensen in ... zijn met een gezond BMI...""")
-        
-    ###################################################################################################################
-    # Plot relatie tussen BMI en levensverwachting
-    
-    st.markdown("""
-    ### Relatie tussen BMI en levensverwachting""")
-    col1, col2 = st.columns(2)
-
-    with col1:    
-        fig = px.scatter(df,
-                 x = 'BMI',
-                 y = 'Life_expectancy',
-                 trendline='ols',
-                 trendline_color_override = 'red')
-
-        fig.update_layout(title = 'Relatie tussen BMI en de levensverwachting',
-                          xaxis_title = 'BMI',  
-                          yaxis_title = 'Levensverwachting',
-                          width = 670)
-
-        fig
-    
-    with col2:
-        st.markdown("")
-        st.markdown("Tekst")
 
 
 # In[ ]:
