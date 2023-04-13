@@ -660,21 +660,25 @@ def grafieken():
         group_labels = ['distplot']
         res = ff.create_distplot(residuals,
                                  group_labels)
-#                                  curve_type='normal'
+
         res.update_traces(marker_color = '#7FD7A4')
 
         res.update_layout(title = 'Verdeling residuen',
                           xaxis_title = 'Residu',
                           yaxis_title = 'Aantal',
-                          showlegend = False)
+                          showlegend = False,
+                          width = 650)
         res
 
     r2 = r2_score(df_pred['Life_expectancy'], df_pred['Prediction'])
         
     st.markdown("""
-    Bij dit model is gecontroleerd of de residuen normaal verdeeld zijn m.b.v een normaliteitsdiagram de 
-    bijbehorende p-waarde en een histogram om te controleren of een lineair regressiemodel wel een goed model was.
-    Hieruit kan men concluderen dat de residuen normaal verdeeld zijn.""")
+    Bij dit model is gecontroleerd of de residuen normaal verdeeld zijn. Dit is gedaan m.b.v
+    * een normaliteitsdiagram en de bijbehorende p-waarde en 
+    * een histogram
+    Op deze manier is gecontroleerd of een lineair regressiemodel wel goed model was om te gebruiken.
+    Hieruit kan men concluderen dat de residuen normaal verdeeld zijn en dat het lineaire regressiemodel waarschijnlijk
+    goed past.""")
     st.write("Het model heeft een regressiescore van ", r2, ".")
 
 
