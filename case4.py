@@ -216,12 +216,13 @@ def grafieken():
                       line_opacity = 0.5,
                       legend_name = 'BBP per hoofd van de bevolking')
         
-        mst_data = st_folium(m2, width = 725, height = 500)
+        mst_data = st_folium(m2)
     
         
     ###################################################################################################################
     # Verdeling levensverwachting
     
+    st.markdown("""---""")
     st.markdown("## Verdeling levensverwachting")       
     
     col1, col2 = st.columns([1.5, 1])
@@ -644,7 +645,8 @@ def grafieken():
                           yaxis_title = 'Echte waarden',
                           showlegend = False,
                           xaxis_range = [35, 85],
-                          yaxis_range = [35, 85])
+                          yaxis_range = [35, 85],
+                          width = 650)
 
         fig
     
