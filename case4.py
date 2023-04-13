@@ -646,6 +646,7 @@ def grafieken():
         fig
     
     with col2:
+        residuals = y_test - y_pred
         hist_data = [residuals['Life_expectancy']]
         group_labels = ['distplot']
 
