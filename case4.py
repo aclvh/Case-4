@@ -312,12 +312,7 @@ def grafieken():
     
     st.markdown("""
     ## Inentingen
-    ### Percentage inentingen per regio en ziekte
-    Om te onderzoeken of de minder hoge levensverwachting in Africa komt omdat er evenuteel minder ingeënt wordt,
-    is per regio het gemiddelde percentage inentingen per ziekte berekend.
-    
-    Ook is onderzocht of in andere regio's het gemiddelde percentage inentingen hoger is, wanneer in deze regio's ook 
-    een hogere levensverwachting is.""")
+    ### Percentage inentingen per regio en ziekte""")
     
     df_im = df[['Region', 'Polio', 'Diphtheria', 'Measles', 'Hepatitis_B']]
 
@@ -352,22 +347,27 @@ def grafieken():
 
     with col1:
         inentingen = px.histogram(df_long,
-                         x = 'Region',
-                         y = 'percentage',
-                         color = 'Inenting tegen',
-                         barmode = 'group',
-                         category_orders = {'Region': regio_volgorde})
-#                          color_discrete_sequence = ['blue', 'green', 'red', 'orange']
+                                 x = 'Region',
+                                 y = 'percentage',
+                                 color = 'Inenting tegen',
+                                 barmode = 'group',
+                                 category_orders = {'Region': regio_volgorde},
+                                 color_discrete_sequence = ['green', 'lightgreen', '#3CB371', '#7FD7A4'])
 
         inentingen.update_layout(title = 'Gemiddeld percentage inentingen tegen ziektes per regio',
                                  xaxis_title = 'Regio',
-                                 yaxis_title = 'Percentage',
-                                 width = 650)
-
+                                 yaxis_title = 'Percentage')
         inentingen
 
     with col2:
         st.markdown("")
+        st.markdown("""
+        Om te onderzoeken of de minder hoge levensverwachting in Africa komt omdat er evenuteel minder ingeënt wordt,
+        is per regio het gemiddelde percentage inentingen per ziekte berekend.
+        
+        Ook is onderzocht of in andere regio's het gemiddelde percentage inentingen hoger is, wanneer in deze regio's ook
+        een hogere levensverwachting is.""")
+        
     
     ###################################################################################################################
     # Plot inentingen in Afrika over de jaren heen
