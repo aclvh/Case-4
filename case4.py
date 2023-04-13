@@ -152,16 +152,7 @@ def grafieken():
     
     with col1:
         jaar = col1.radio('Jaar', jaren)
-        
-        st.markdown("""
-        Rechts is te zien wat de gemiddelde levensverwachting is per land en of dit hoog/laag is ten opzichte van 
-        andere landen.
-        
-        Wanneer een land zwart gekleurd is is geen informatie bekend over dit land.
-        
-        Wat opvalt is dat de levensverwachting in Amerika, Europa en Oceanië gemiddeld gezien hoog is en in Afrika de
-        levensverwachting laag.""")
-    
+            
     with col2:
         # Filter the data based on the selected year
         df_kaart = df[df['Year'] == int(jaar)].dropna()
@@ -184,8 +175,25 @@ def grafieken():
                       line_opacity = 0.5,
                       legend_name = 'Life expectancy')
 
-        st_data = st_folium(m1, width = 725, height = 500)
+        st_data = st_folium(m1, width = 775, height = 500)
 
+        
+    col1, col2 = st.columns([1, 1.5])
+    
+    with col1:        
+        st.markdown("""
+        Naast het keuzemenu is te zien wat de gemiddelde levensverwachting is per land en of dit hoog/laag is 
+        ten opzichte van andere landen.
+        
+        Wanneer een land zwart gekleurd is is geen informatie bekend over dit land.
+        
+        Wat opvalt is dat de levensverwachting in Amerika, Europa en Oceanië gemiddeld gezien hoog is en in Afrika de
+        levensverwachting laag.
+        
+        Wanneer men dit vergelijkt met de kaart die gaat over het BBP per hoofd van de bevolking per land, dan valt
+        het op dat op ongeveer dezelfde plekken het BBP per hoofd van de bevolking ook hoger is.""")
+
+        
         # Kaart ontwikkelingsstatus maken
         m2 = folium.Map(location = [0,0],
                         zoom_start = 10,
