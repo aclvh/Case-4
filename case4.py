@@ -178,7 +178,7 @@ def grafieken():
         verdeling = px.histogram(df,
                              x = 'Life_expectancy')
         
-        verdeling.update_traces(marker_color = '#3eb489')
+        verdeling.update_traces(marker_color = '#7FD7A4')
         verdeling.update_layout(title = "Verdeling van de levensverwachting",
                                 xaxis_title = "Levensverwachting",
                                 yaxis_title = "Aantal")
@@ -265,7 +265,7 @@ def grafieken():
                           y = 'Life_expectancy',
                           category_orders = {'Region': regio_volgorde})
 
-        fig_jaar.update_traces(marker_color = '#3eb489')
+        fig_jaar.update_traces(marker_color = '#7FD7A4')
         fig_jaar.update_layout(title = 'Relatie tussen levensverwachting en de regio',
                                xaxis_title = 'Regio',
                                yaxis_title = 'Levensverwachting (in jaren)',
@@ -291,7 +291,7 @@ def grafieken():
                           y = 'Life_expectancy',
                           category_orders={'Region': regio_volgorde})
 
-        fig_jaar.update_traces(marker_color = '#3eb489')
+        fig_jaar.update_traces(marker_color = '#7FD7A4')
         fig_jaar.update_layout(title = 'Relatie tussen levensverwachting en de regio',
                                xaxis_title = 'Regio',
                                yaxis_title = 'Levensverwachting (in jaren)',
@@ -352,7 +352,7 @@ def grafieken():
                                  color = 'Inenting tegen',
                                  barmode = 'group',
                                  category_orders = {'Region': regio_volgorde},
-                                 color_discrete_sequence = ['red', 'pink', '#3eb489', '#3776ab'])
+                                 color_discrete_sequence = ['red', 'pink', '#7FD7A4', '#3776ab'])
 #                                  color_discrete_sequence = ['green', 'lightgreen', '#3CB371', '#7FD7A4']
 #                                  color_discrete_sequence = ['red', 'pink', '#3CB371', 'lightblue']
 
@@ -419,7 +419,7 @@ def grafieken():
                       y = 'Mean',
                       x = 'Date',
                       color = 'Inenting',
-                      color_discrete_sequence = ['red', 'pink', '#3eb489', '#3776ab'])
+                      color_discrete_sequence = ['red', 'pink', '#7FD7A4', '#3776ab'])
 
         fig.update_layout(title = 'Gemiddelde percentage ingeënt per ziekte',
                           xaxis_title = 'Datum',
@@ -446,27 +446,26 @@ def grafieken():
     col1, col2 = st.columns(2)
 
     with col1:
-        df_inenting = df[['Hepatitis_B', 'Measles', 'Polio', 'Diphtheria', 'Life_expectancy']]
-        df_inenting['gem_percentage_ingeënt'] = df_inenting[['Hepatitis_B', 'Measles', 'Polio', 'Diphtheria']].mean(axis=1)
+        gem_inenting = df.loc[:, ['Hepatitis_B', 'Measles', 'Polio', 'Diphtheria', 'Life_expectancy']].copy()
+        gem_inenting['gem_percentage_ingeënt'] = gem_inenting[['Hepatitis_B', 'Measles', 'Polio', 'Diphtheria']].mean(axis=1)
 
         # keuze ziekte
-        fig = px.scatter(df_inenting,
+        fig = px.scatter(gem_inenting,
                          x = 'gem_percentage_ingeënt',
                          y = 'Life_expectancy',
-                         trendline = 'ols',
+                         color_discrete_sequence=['#7FD7A4'],
+                         trendline='ols',
                          trendline_color_override = 'red')
 
-        fig.update_layout(title = "Relatie tussen het gemiddelde percentage ingeënt en de levensverwachting",
-                          xaxis_title = "Gemiddeld percentage ingeënt voor verschillende ziekten",
-                          yaxis_title = "Levensverwachting in jaren",
-                          width = 670)
+        fig.update_layout(title = "Regressie tussen het gemiddelde percentage ingeënt en de levensverwachting",
+                                 xaxis_title = "Gemiddeld percentage ingeënt voor verschillende ziekten",
+                                 yaxis_title = "Levensverwachting in jaren")
 
         fig
 
     with col2:
         st.markdown("")
         st.markdown("""
-        
         Door de aanname die volgt uit de vorige plot zou men kunnen aannemen dat de levensverwacthing toeneemt 
         naarmate een groter percentage van de bevolking is ingeënt tegen deze ziektes.
         
