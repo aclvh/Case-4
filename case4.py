@@ -104,10 +104,19 @@ def grafieken():
     import streamlit as st
     import geopandas
     import pandas as pd
+    import numpy as np
     import folium
     from streamlit_folium import st_folium
     import plotly.express as px
     import statsmodels.api as sm
+    
+    
+    from sklearn.linear_model import LinearRegression
+    from sklearn.model_selection import train_test_split
+    from sklearn.metrics import r2_score, mean_squared_error
+
+    import plotly.graph_objs as go
+    
     
 #     import matplotlib.pyplot as plt
 #     import seaborn as sns
@@ -310,6 +319,7 @@ def grafieken():
     # (Kijken of de stijging van de levensverwachting misschien komt door de inentingen)
     # Kijken of de minder hoge levensverwachting in Africa bijvoorbeeld komt doordat er minder wordt ingeënt
     
+    st.markdown("""---""")
     st.markdown("""
     ## Inentingen
     ### Percentage inentingen per regio en ziekte""")
@@ -371,7 +381,7 @@ def grafieken():
         Ook is onderzocht of in andere regio's het gemiddelde percentage inentingen hoger is, wanneer in deze regio's ook
         een hogere levensverwachting is.
         
-        In afrika is inderdaad het minste percentage ingeënt per ziekte gemiddeld gezien over de jaren heen.""")
+        In Afrika is inderdaad het gemiddeld gezien het minste percentage mensen ingeënt per ziekte over de jaren heen.""")
         
     
     ###################################################################################################################
@@ -440,6 +450,7 @@ def grafieken():
         Het is aannemelijk om aan te nemen dat de levensverwachting in Afrika is toegenomen door de stijging in het 
         percentage mensen dat wordt ingeënt tegen deze ziektes.""")
         
+        
     ###################################################################################################################
     # Plot regressie tussen gemiddeld percentage ingeënd en levensverwachting
     st.markdown("""### Relatie tussen gemiddeld percentage ingeënt en levensverwachting""")
@@ -459,7 +470,7 @@ def grafieken():
                          trendline_color_override = 'red',
                          width = 670)
 
-        fig.update_layout(title = "Regressie tussen het gemiddelde percentage ingeënt en de levensverwachting",
+        fig.update_layout(title = "Relatie tussen het gemiddelde percentage ingeënt en de levensverwachting",
                                  xaxis_title = "Gemiddeld percentage ingeënt voor verschillende ziekten",
                                  yaxis_title = "Levensverwachting in jaren")
         fig
@@ -479,7 +490,128 @@ def grafieken():
         In de scatterplot is inderdaad te zien, dat wanneer het percentage wat ingeënt is stijgt, de levensverwachting
         ook toeneemt.""")
         
+        
     ###################################################################################################################
+    # Variabele sterfgevallen
+    st.markdown("""---""")
+    st.markdown("""
+    ## Relatie tussen het aantal sterfgevallen per 100 inwoners en de levensverwachting
+    Na het maken van een heatmap bleek dat nog drie variabelen een sterke relatie hadden met de variabele
+    levensverwachting. Dit waren de variabelen:
+    * Infant_deaths: Vertegenwoordigt kindersterfte per 1000 inwoners
+    * Under_five_deaths: Vertegenwoordigt sterfgevallen van kinderen jonger dan vijf jaar per 1000 inwoners
+    * Adult_mortality: Vertegenwoordigt sterfgevallen van volwassenen per 1000 inwoners
+    De lineaire relatie tussen deze drie variabelen en de levensverwachting wordt hieronder weergegeven:""")
+    
+    col1, col2, col3 = st.columns(3)
+
+    with col1:
+        # Kinderen
+        fig = px.scatter(df,
+                         x = 'Infant_deaths',
+                         y = 'Life_expectancy',
+                         trendline='ols',
+                         trendline_color_override = 'red',
+                         color_discrete_sequence=['#7FD7A4'])
+
+        fig.update_layout(title = 'Relatie tussen het aantal kinder sterfgevallen en de levensverwachting',
+                          xaxis_title = 'Aantal sterfgevallen (per 1000 inwoners)',
+                          yaxis_title = 'Levensverwachting in jaren')
+        fig
+        
+    with col2:
+        # Kinderen onder de 5 jaar
+        fig = px.scatter(df,
+                         x = 'Under_five_deaths',
+                         y = 'Life_expectancy',
+                         trendline='ols',
+                         trendline_color_override = 'red',
+                         color_discrete_sequence=['#7FD7A4'])
+
+        fig.update_layout(title = 'Relatie tussen het aantal sterfgevallen van kinderen onder de 5 jaar en de levensverwachting',
+                          xaxis_title = 'Aantal sterfgevallen (per 1000 inwoners)',
+                          yaxis_title = 'Levensverwachting in jaren')
+        fig
+        
+    with col3:
+        # Volwassenen
+        fig = px.scatter(df,
+                         x = 'Adult_mortality',
+                         y = 'Life_expectancy',
+                         trendline='ols',
+                         trendline_color_override = 'red',
+                         color_discrete_sequence=['#7FD7A4'])
+
+        fig.update_layout(title = 'Relatie tussen het aantal sterfgevallen van volwassenen en de levensverwachting',
+                          xaxis_title = 'Aantal sterfgevallen (per 1000 inwoners)',
+                          yaxis_title = 'Levensverwachting in jaren')
+        fig
+        
+    ###################################################################################################################
+    # Variabele sterfgevallen
+    
+    st.markdown("""---""")
+    st.markdown("""
+    ## Lineair regressiemodel
+    Met behulp van alle voorgaande informatie is een lineair regressiemodel gemaakt die met behulp van de volgende
+    variabelen de gemiddelde levensverwachting in een land kan voorspellen:
+    * var1
+    *""")
+    
+    df_lr = df.copy()
+    df_lr.dropna(inplace = True)
+
+    # Selecteer de onafhankelijke variabelen (features) en afhankelijke variabele (target)
+    X = df_lr[['Infant_deaths', 'Adult_mortality', 'Hepatitis_B', 'Measles', 'Polio', 'Diphtheria']]
+
+    # Economy_status_Developed
+    # Economy_status_Developing
+
+    y = df_lr[['Life_expectancy']]
+
+    # Split de dataset in train en test sets
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+    # Bouw het lineaire regressiemodel
+    lr_model = LinearRegression()
+
+    # Train het model op de train set
+    lr_model.fit(X_train, y_train)
+
+    # Voorspel de levensverwachting op de test set
+    y_pred = lr_model.predict(X_test)
+    y_true = y_test
+    
+    ### Omzetten naar een dataframe voor plot
+    y_pred = pd.DataFrame(y_pred)
+    y_pred.reset_index(inplace = True)
+
+    y_true.reset_index(inplace = True)
+    y_true.drop(['index'], axis=1, inplace = True)
+
+    df_pred = pd.merge(df_y_pred, y_true, left_index=True, right_index=True)
+    df_pred.rename(columns={0: 'Prediction'}, inplace = True)
+    df_pred.head()
+    
+    ### Plot
+    fig = px.scatter(df_pred,
+                     x='Prediction',
+                     y='Life_expectancy')
+
+    fig.update_traces(marker=dict(color='#7FD7A4'))
+
+    # Een lijn toevoegen voor wanneer de voorspelling perfect zou zijn
+    fig.add_trace(go.Scatter(x=[min(df_pred['Prediction']), max(df_pred['Prediction'])],
+                             y=[min(df_pred['Life_expectancy']), max(df_pred['Life_expectancy'])],
+                             mode='lines',
+                             line=dict(color='red')))
+
+    fig.update_layout(title='Voorspelde waarden vs echte waarden',
+                      xaxis_title='Voorspelde waarden',
+                      yaxis_title='Echte waarden',
+                      showlegend=False)
+
+    fig
 
 
 # In[ ]:
