@@ -646,7 +646,7 @@ def grafieken():
         fig
     
     with col2:
-        residuals = y_test - y_pred
+        residuals = df_pred['Life_expectancy'] - df_pred['Prediction']
         res = px.histogram(residuals)
 
         res.update_traces(marker_color = '#7FD7A4')
