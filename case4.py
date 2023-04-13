@@ -146,7 +146,8 @@ def grafieken():
     jaren = ('2001', '2002', '2003', '2004', '2005', '2006', '2007', '2008', '2009', '2010',
             '2011', '2012', '2013', '2014', '2015')
     
-    col1, col2, col3 = st.columns([1, 3, 3])
+#     col1, col2 = st.columns([1, 3, 3])
+    col1, col2 = st.columns([1.5, 1])
     
     with col1:
         jaar = col1.radio('Jaar', jaren)
@@ -155,7 +156,7 @@ def grafieken():
         # Filter the data based on the selected year
         df_kaart = df[df['Year'] == int(jaar)].dropna()
 
-        # Create the map and add it to the second column
+        # Kaart levensverwachting
         m1 = folium.Map(location = [0,0],
                         zoom_start = 10,
                         zoom_control = False,
@@ -175,11 +176,8 @@ def grafieken():
 
         st_data = st_folium(m1)
 #         width = 725, height = 500
-    with col3:
-        # Filter the data based on the selected year
-        df_kaart = df[df['Year'] == int(jaar)].dropna()
-        
-        # Kaart maken
+
+        # Kaart ontwikkelingsstatus maken
         m2 = folium.Map(location = [0,0],
                         zoom_start = 10,
                         zoom_control=False,
