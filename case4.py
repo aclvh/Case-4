@@ -177,7 +177,8 @@ def grafieken():
     with col1:
         verdeling = px.histogram(df,
                              x = 'Life_expectancy')
-
+        
+        verdeling.update_traces(marker_color='lightgreen')
         verdeling.update_layout(title = "Verdeling van de levensverwachting",
                                 xaxis_title = "Levensverwachting",
                                 yaxis_title = "Aantal", 
