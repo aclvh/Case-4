@@ -497,10 +497,9 @@ def grafieken():
     st.markdown("""
     ## Relatie tussen het aantal sterfgevallen en de levensverwachting
     Na het maken van een heatmap bleek dat nog drie variabelen een sterke relatie hadden met de variabele
-    levensverwachting. Dit waren de variabelen:
-    * **Infant_deaths**: Vertegenwoordigt kindersterfte per 1000 inwoners
-    * **Under_five_deaths**: Vertegenwoordigt sterfgevallen van kinderen jonger dan vijf jaar per 1000 inwoners
-    * **Adult_mortality**: Vertegenwoordigt sterfgevallen van volwassenen per 1000 inwoners
+    levensverwachting. Dit waren de variabelen die het volgende weergaven:
+    * Sterfgevallen van kinderen per 1000 inwoners
+    * Sterfgevallen van volwassenen per 1000 inwoners
     De lineaire relatie tussen deze drie variabelen en de levensverwachting wordt hieronder weergegeven:""")
     
     col1, col2 = st.columns(2)
@@ -515,20 +514,6 @@ def grafieken():
                          color_discrete_sequence = ['#7FD7A4'])
 
         fig.update_layout(title = 'Relatie tussen het aantal kinder sterfgevallen en de levensverwachting',
-                          xaxis_title = 'Aantal sterfgevallen (per 1000 inwoners)',
-                          yaxis_title = 'Levensverwachting in jaren',
-                          width = 670)
-        fig
-        
-        # Kinderen onder de 5 jaar
-        fig = px.scatter(df,
-                         x = 'Under_five_deaths',
-                         y = 'Life_expectancy',
-                         trendline = 'ols',
-                         trendline_color_override = 'red',
-                         color_discrete_sequence = ['#7FD7A4'])
-
-        fig.update_layout(title = 'Relatie tussen het aantal sterfgevallen van kinderen onder de 5 jaar en de levensverwachting',
                           xaxis_title = 'Aantal sterfgevallen (per 1000 inwoners)',
                           yaxis_title = 'Levensverwachting in jaren',
                           width = 670)
@@ -557,12 +542,12 @@ def grafieken():
     ## Lineair regressiemodel
     Met behulp van alle voorgaande informatie is een lineair regressiemodel gemaakt die met behulp van de volgende
     variabelen de gemiddelde levensverwachting in een land kan voorspellen:
-    * Infant_deaths
-    * Adult_mortality
-    * Hepatitis B
-    * Mazelen
-    * Polio
-    * Difterie""")
+    * Sterfgevallen van kinderen per 1000 inwoners
+    * Sterfgevallen van volwassenen per 1000 inwoners
+    * Percentage ingeënt tegen hepatitis B
+    * Percentage ingeënt tegen de mazelen
+    * Percentage ingeënt tegen polio
+    * Percentage ingeënt tegen difterie""")
     
     col1, col2 = st.columns(2)
 
