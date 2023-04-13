@@ -114,7 +114,7 @@ def grafieken():
     from sklearn.metrics import r2_score, mean_squared_error
 
     import plotly.graph_objs as go
-    
+    import plotly.figure_factory as ff
     
 #     import matplotlib.pyplot as plt
 #     import seaborn as sns
@@ -537,14 +537,14 @@ def grafieken():
     ## Relatie tussen het aantal sterfgevallen en de levensverwachting
     Na het maken van een heatmap bleek dat nog drie variabelen een sterke relatie hadden met de variabele
     levensverwachting. Dit waren de variabelen die het volgende weergaven:
-    * Sterfgevallen van kinderen per 1000 inwoners
+    * Sterfgevallen van zuigelingen per 1000 inwoners
     * Sterfgevallen van volwassenen per 1000 inwoners
     De lineaire relatie tussen deze drie variabelen en de levensverwachting wordt hieronder weergegeven:""")
     
     col1, col2 = st.columns(2)
 
     with col1:
-        # Kinderen
+        # Zuigelingen
         fig = px.scatter(df,
                          x = 'Infant_deaths',
                          y = 'Life_expectancy',
@@ -552,7 +552,7 @@ def grafieken():
                          trendline_color_override = 'red',
                          color_discrete_sequence = ['#7FD7A4'])
 
-        fig.update_layout(title = 'Relatie tussen het aantal kinder sterfgevallen en de levensverwachting',
+        fig.update_layout(title = 'Relatie tussen het aantal zuigeling sterfgevallen en de levensverwachting',
                           xaxis_title = 'Aantal sterfgevallen (per 1000 inwoners)',
                           yaxis_title = 'Levensverwachting in jaren',
                           width = 670)
@@ -581,7 +581,7 @@ def grafieken():
     ## Lineair regressiemodel
     Met behulp van alle voorgaande informatie is een lineair regressiemodel gemaakt die met behulp van de volgende
     variabelen de gemiddelde levensverwachting in een land kan voorspellen:
-    * Sterfgevallen van kinderen per 1000 inwoners
+    * Sterfgevallen van zuigelingen per 1000 inwoners
     * Sterfgevallen van volwassenen per 1000 inwoners
     * Percentage ingeënt tegen hepatitis B
     * Percentage ingeënt tegen de mazelen
@@ -646,15 +646,29 @@ def grafieken():
         fig
     
     with col2:
-        r2 = r2_score(df_pred['Life_expectancy'], df_pred['Prediction'])
+        hist_data = [residuals['Life_expectancy']]
+        group_labels = ['distplot']
+
+        res = ff.create_distplot(hist_data,
+                                 group_labels)
+        #                          curve_type='normal'
+
+        res.update_traces(marker_color = '#7FD7A4')
+
+        res.update_layout(title = 'Verdeling residuen',
+                          xaxis_title = 'Residu',
+                          yaxis_title = 'Aantal',
+                          showlegend = False)
+
+        res
+    
+    r2 = r2_score(df_pred['Life_expectancy'], df_pred['Prediction'])
         
-        st.markdown("")
-        st.markdown("")
-        st.markdown("""
-        Bij dit model is gecontroleerd of de residuen normaal verdeeld zijn m.b.v een normaliteitsdiagram en de 
-        bijbehorende p-waarde om te controleren of een lineair regressiemodel wel een goed model was.
-        De residuen waren normaal verdeeld.""")
-        st.write("Het model heeft een regressiescore van ", r2, ".")
+    st.markdown("""
+    Bij dit model is gecontroleerd of de residuen normaal verdeeld zijn m.b.v een normaliteitsdiagram de 
+    bijbehorende p-waarde en een histogram om te controleren of een lineair regressiemodel wel een goed model was.
+    Hieruit kan men concluderen dat de residuen normaal verdeeld zijn.""")
+    st.write("Het model heeft een regressiescore van ", r2, ".")
 
 
 # In[ ]:
