@@ -185,9 +185,10 @@ def grafieken():
         verdeling
     
     with col2:
+        st.markdown("")
         st.markdown("""
-        Te zien is dat de meerderheid van de mensen ouder dan 65 lijkt te worden, maar dat de levensverwachting
-        wel linksscheef verdeeld is.""")
+        In de grafiek hier links weergegeven is te zien dat de meerderheid van de mensen ouder dan 65 lijkt te worden en
+        dat de levensverwachting linksscheef verdeeld is.""")
     
     
     ###################################################################################################################
