@@ -681,6 +681,10 @@ def grafieken():
     Hieruit kan men concluderen dat de residuen normaal verdeeld zijn en dat het lineaire regressiemodel waarschijnlijk
     goed past.""")
     st.write("Het model heeft een regressiescore van ", r2, ".")
+    
+    st.markdown("""
+    Ook is het model uitgevoerd op de getransformeerde levensverwachting (zodat deze normaal verdeeld is) dit resulteerde
+    inderdaad in een beter model.""")
 
 
 # In[ ]:
